@@ -1,0 +1,43 @@
+/**
+ * @file MaterialTimePicker.scss
+ */
+
+@import '../assets/scss/common';
+
+.material-time-picker {
+    height: 64px;
+
+    .material-provider {
+
+        .material-provider-label {
+            color: $theme-label !important;
+        }
+
+        .text-field-input,
+        .text-field-placeholder {
+            font-size: 14px !important;
+        }
+    }
+
+    &.focused {
+        .material-provider-label {
+            color: $theme-highlight !important;
+        }
+    }
+}
+
+.portal .popup.material-time-picker-popup {
+    width: 200px;
+
+    .calendar {
+        width: 100%;
+
+        .time-items {
+            width: 50% !important;
+
+            &.seconds {
+                display: none;
+            }
+        }
+    }
+}

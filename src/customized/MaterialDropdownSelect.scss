@@ -1,0 +1,27 @@
+/**
+ * @file MaterialDropdownSelect.scss
+ */
+
+@import '../assets/scss/common';
+
+.material-provider.material-dropdown-select {
+    background: transparent !important;
+
+    .material-provider-label {
+        color: $theme-label !important;
+    }
+
+    &.focused {
+        .material-provider-label {
+            color: $theme-highlight !important;
+        }
+    }
+}
+
+.popup.dropdown-popup.dropdown-select-popup {
+    border-radius: 8px !important;
+
+    .list-item {
+        border-radius: 8px !important;
+    }
+}

@@ -1,0 +1,19 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Idea project files
+.idea
+
+# windows thumbnail cache
+Thumbs.db
+
+# Dependency directories
+node_modules
+.sass-cache
+package-lock.json
+
+# Dist directories
+/dpe-frontend
+/dpe-frontend.zip

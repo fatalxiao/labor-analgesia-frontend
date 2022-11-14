@@ -1,0 +1,15 @@
+/**
+ * @file PointStep.scss
+ */
+
+@import '../assets/scss/common';
+
+.point-step {
+    .round {
+        cursor: default !important;
+    }
+
+    .bg-round {
+        background: $theme-bg !important;
+    }
+}

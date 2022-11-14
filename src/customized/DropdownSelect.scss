@@ -1,0 +1,19 @@
+/**
+ * @file DropdownSelect.scss
+ */
+
+@import '../assets/scss/common';
+
+.dropdown-select-popup {
+    border: 1px solid $theme-border !important;
+    border-radius: $theme-border-radius !important;
+    margin-top: 2px !important;
+
+    .list-item {
+        font-size: 16px;
+    }
+
+    &.above {
+        margin-top: -2px !important;
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "name": "dpe-frontend",
+    "author": "liangxiaojun",
+    "version": "1.0.0",
+    "description": "DPE ReactJs Front-end Project.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fatalxiao/dpe-frontend"
+    },
+    "keywords": [
+        "dpe",
+        "react",
+        "ui"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/fatalxiao/dpe-frontend/issues"
+    },
+    "dependencies": {
+        "compression": "1.7.4",
+        "connect-history-api-fallback": "1.6.0",
+        "express": "4.17.1",
+        "http-proxy-middleware": "1.0.6",
+        "moment": "2.29.1",
+        "path": "0.12.7"
+    }
+}

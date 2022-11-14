@@ -1,0 +1,13 @@
+/**
+ * @file Checkbox.scss
+ */
+
+@import '../assets/scss/common';
+
+.checkbox {
+    font-size: 20px;
+
+    .checkbox-icon {
+        color: $theme-success !important;
+    }
+}

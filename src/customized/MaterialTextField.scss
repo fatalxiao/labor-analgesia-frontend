@@ -1,0 +1,30 @@
+/**
+ * @file MaterialTextField.scss
+ */
+
+@import '../assets/scss/common';
+
+.material-text-field {
+    background: transparent !important;
+
+    .material-provider-label {
+        color: $theme-label !important;
+    }
+
+    .text-field-placeholder,
+    .text-field-input {
+        font-size: inherit !important;
+    }
+
+    .text-field-right-icon {
+        .unit::after {
+            color: $theme-description;
+        }
+    }
+
+    &.focused {
+        .material-provider-label {
+            color: $theme-highlight !important;
+        }
+    }
+}

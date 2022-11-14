@@ -1,0 +1,40 @@
+/**
+ * @file PatientEditor.scss
+ */
+
+@import 'scss/common.scss';
+
+.patient-editor {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+
+    .patient-editor-stepper {
+        margin-bottom: 16px;
+    }
+
+    .patient-editor-base-info {
+        padding-bottom: 16px;
+        border-bottom: 1px solid $theme-border;
+
+        .patient-editor-name {
+            margin: 0;
+        }
+
+        .patient-editor-desc {
+            opacity: .5;
+        }
+    }
+
+    .patient-editor-content {
+        position: relative;
+        flex: 1;
+        padding: 24px;
+        overflow: hidden;
+
+        .patient-editor-content-title {
+            margin-bottom: 0;
+        }
+    }
+}
