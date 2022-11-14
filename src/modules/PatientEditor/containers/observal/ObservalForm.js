@@ -169,6 +169,12 @@ const ObservalForm = ({
                               checked={form.hasInstrumental}
                               onChange={v => updateField('hasInstrumental', v)}/>
                 </div>
+                <div className="row">
+                    <Checkbox className="col-3"
+                              label="Pruritus"
+                              checked={form.hasPruritus}
+                              onChange={v => updateField('hasPruritus', v)}/>
+                </div>
             </FieldSet>
 
             <FieldSet title="6. Lateral Episiotomy">

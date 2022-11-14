@@ -50,6 +50,7 @@ const DEFAULT_FORM = {
     hasHypotension: false,
     hasCaesareanSection: false,
     hasInstrumental: false,
+    hasPruritus: false,
     hasLateralEpisiotomy: false,
     birthTime: '',
     foetalWeight: '',
