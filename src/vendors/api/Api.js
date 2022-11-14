@@ -24,8 +24,8 @@ function request(method, {
         method,
         url,
         headers: {
-            ...header,
-            'Content-type': contentType || 'application/json'
+            ...header
+            // 'Content-type': contentType || 'application/json'
         },
         params: method === 'get' ?
             params
