@@ -37,20 +37,20 @@ export default {
         /**
          * 获取所有的 Ep Placement Point 数据
          */
-        getEpPlacementPointRequest: state => {
+        getEpPlacementPointsRequest: state => {
             return {
                 ...state,
                 actionType: 'epPlacementPoint/getEpPlacementPointRequest'
             };
         },
-        getEpPlacementPointSuccess: (state, {responseData}) => {
+        getEpPlacementPointsSuccess: (state, {responseData}) => {
             return {
                 ...state,
                 actionType: 'epPlacementPoint/getEpPlacementPointSuccess',
                 list: responseData
             };
         },
-        getEpPlacementPointFailure: state => {
+        getEpPlacementPointsFailure: state => {
             return {
                 ...state,
                 actionType: 'epPlacementPoint/getEpPlacementPointFailure',
