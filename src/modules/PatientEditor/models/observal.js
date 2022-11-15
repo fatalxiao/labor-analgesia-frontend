@@ -78,7 +78,9 @@ export default {
          */
         getObservalData: ({patientId}) => dispatchApi => dispatchApi({
             api: getObservalDataByPatientId,
-            params: {patientId},
+            params: {
+                patientId
+            },
             successResMsgDisabled: true
         }),
 
@@ -160,20 +162,20 @@ export default {
          * @param state
          * @returns {*&{getActionType: string}}
          */
-        getObservalRequest: state => {
+        getObservalDataRequest: state => {
             return {
                 ...state,
                 getActionType: 'observal/getObservalRequest'
             };
         },
-        getObservalSuccess: (state, {responseData}) => {
+        getObservalDataSuccess: (state, {responseData}) => {
             return {
                 ...state,
                 getActionType: 'observal/getObservalSuccess',
                 form: responseData || {...DEFAULT_FORM}
             };
         },
-        getObservalFailure: state => {
+        getObservalDataFailure: state => {
             return {
                 ...state,
                 getActionType: 'observal/getObservalFailure'
@@ -185,19 +187,19 @@ export default {
          * @param state
          * @returns {*&{updateActionType: string}}
          */
-        updateObservalRequest: state => {
+        createOrUpdateObservalDataRequest: state => {
             return {
                 ...state,
                 updateActionType: 'observal/updateObservalRequest'
             };
         },
-        updateObservalSuccess: state => {
+        createOrUpdateObservalDataSuccess: state => {
             return {
                 ...state,
                 updateActionType: 'observal/updateObservalSuccess'
             };
         },
-        updateObservalFailure: state => {
+        createOrUpdateObservalDataFailure: state => {
             return {
                 ...state,
                 updateActionType: 'observal/updateObservalFailure'
