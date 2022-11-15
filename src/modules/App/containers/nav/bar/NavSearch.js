@@ -63,7 +63,7 @@ const NavSearch = ({
                 <div className="nav-search-content">
                     <TextField className="nav-search-field"
                                value={filterValue}
-                               placeholder="Search"
+                               placeholder="Patient ID or name..."
                                onChange={handleFilterChange}/>
                     {
                         data?.length > 0 ?
