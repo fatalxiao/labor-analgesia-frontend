@@ -15,30 +15,28 @@ const logger = require('fancy-node-logger');
 
 logger.wait('Starting App...\n');
 
-const
+/**
+ * server env
+ * @type {string}
+ */
+const env = process.env.NODE_ENV || 'production';
 
-    /**
-     * server env
-     * @type {string}
-     */
-    env = process.env.NODE_ENV,
+/**
+ * express app
+ * @type {*|Express}
+ */
+const app = express();
 
-    /**
-     * express app
-     * @type {*|Express}
-     */
-    app = express(),
+/**
+ * server port
+ */
+const port = config[env].port;
 
-    /**
-     * server port
-     */
-    port = config[env].port,
-
-    /**
-     * server url
-     * @type {string}
-     */
-    url = 'http://localhost:' + port;
+/**
+ * server url
+ * @type {string}
+ */
+const url = 'http://localhost:' + port;
 
 /**
  * 配置代理
