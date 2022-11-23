@@ -34,6 +34,7 @@
         "babel-polyfill": "^6.26.0",
         "classnames": "^2.3.2",
         "connected-react-router": "^6.9.3",
+        "dayjs": "^1.11.6",
         "history": "^4.10.1",
         "lodash": "^4.17.21",
         "moment": "^2.29.4",
@@ -50,6 +51,7 @@
         "vivy": "^2.1.2",
         "vivy-api": "^2.1.5",
         "vivy-async-component": "^2.0.8",
+        "vivy-i18n": "^2.3.3",
         "vivy-router": "^2.0.3"
     },
     "devDependencies": {

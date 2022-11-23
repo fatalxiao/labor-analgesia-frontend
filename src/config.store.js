@@ -4,9 +4,10 @@
 
 // Vivy
 import Vivy from 'vivy';
-import VivyApi from 'vivy-api';
 import VivyRouter from 'vivy-router';
 import VivyAsyncComponent from 'vivy-async-component';
+import VivyApi from 'vivy-api';
+import VivyI18n from 'vivy-i18n';
 
 // Models
 import route from 'models/route';
@@ -85,6 +86,11 @@ export default function configureStore(history) {
             failureCallback?.(responseData, response);
 
         }
+    }));
+
+    // Apply I18n plugin
+    vivy.use(VivyI18n({
+        defaultLanguage: 'en-US'
     }));
 
     // Create store after configuration
