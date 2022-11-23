@@ -6,14 +6,16 @@
 
 import React from 'react';
 
+// Configs
+import {configureRoutes} from './config.route';
+import configureStore from './config.store';
+
 // Vendors
 import {createRoot} from 'react-dom/client';
 import {createBrowserHistory} from 'history';
 import {renderRoutes} from 'react-router-config';
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
-import {configureRoutes} from './config.route';
-import configureStore from './config.store';
 
 // Styles
 import 'assets/bootstrap/bootstrap-grid.min.css';
