@@ -2,7 +2,7 @@
  * @file App.js
  */
 
-import React, {useMemo, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindModelActionCreators} from 'vivy';
@@ -10,11 +10,8 @@ import {bindModelActionCreators} from 'vivy';
 // Components
 import Nav from './nav/Nav';
 import NavTitle from './nav/title/NavTitle';
-import PageLoading from 'alcedo-ui/PageLoading';
-import ModuleLoading from 'components/module/loading/ModuleLoading';
-
-// Statics
-import {ApiStatus} from 'vivy-api';
+import PageLoading from 'components/PageLoading';
+import ModuleLoading from 'components/ModuleLoading';
 
 // Vendors
 import {renderRoutes} from 'react-router-config';
@@ -34,20 +31,6 @@ const App = ({
     getPatientGroups, getSensoryBlocks, getObservalEndPoints, getEpPlacementPoints, getPatients
 
 }) => {
-
-    /**
-     * 是否正在加载基础数据
-     * @type {*}
-     */
-    const loading = useMemo(() => {
-        return getPatientGroupsStatus !== ApiStatus.SUCCESS
-            || getSensoryBlocksStatus !== ApiStatus.SUCCESS
-            || getObservalEndPointsStatus !== ApiStatus.SUCCESS
-            || getEpPlacementPointsStatus !== ApiStatus.SUCCESS;
-    }, [
-        getPatientGroupsStatus, getSensoryBlocksStatus,
-        getObservalEndPointsStatus, getEpPlacementPointsStatus
-    ]);
 
     /**
      * init
@@ -70,13 +53,21 @@ const App = ({
 
             <div className="app-content">
 
-                <PageLoading visible={asyncComponentLoading}
-                             showStripes={false}/>
+                {/* { */}
+                {/*     asyncComponentLoading && ( */}
+                        <PageLoading/>
+                {/*     ) */}
+                {/* } */}
 
                 <NavTitle/>
 
                 <div className="app-content-content">
-                    <ModuleLoading loading={loading}>
+                    <ModuleLoading statuses={[
+                        getPatientGroupsStatus,
+                        getSensoryBlocksStatus,
+                        getObservalEndPointsStatus,
+                        getEpPlacementPointsStatus
+                    ]}>
                         {renderRoutes(route.routes)}
                     </ModuleLoading>
                 </div>
