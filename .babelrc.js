@@ -17,13 +17,6 @@ const presets = [
     ],
     '@babel/preset-react'
 ];
-const packagePlugins = [
-    ['transform-react-remove-prop-types', {removeImport: true}]
-];
-const packageConfig = {
-    presets,
-    plugins: packagePlugins
-};
 
 module.exports = {
     'env': {
@@ -42,7 +35,12 @@ module.exports = {
             ]
         },
 
-        'production': packageConfig
+        'production': {
+            presets,
+            plugins: [
+                ['transform-react-remove-prop-types', {removeImport: true}]
+            ]
+        }
 
     }
 };
