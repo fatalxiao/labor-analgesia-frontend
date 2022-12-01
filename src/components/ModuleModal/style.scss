@@ -1,0 +1,41 @@
+/**
+ * @file ModuleModal.scss
+ */
+
+@import 'scss/common.scss';
+
+.module-modal {
+
+    .ant-modal-content {
+        padding: 0;
+        border-radius: 24px;
+        overflow: hidden;
+    }
+
+    .ant-modal-close {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+
+        .ant-modal-close-x {
+            font-size: 24px;
+        }
+    }
+
+    .ant-modal-header {
+        height: 80px;
+        padding: 24px 32px 0 40px;
+
+        .ant-modal-title {
+            font-size: 24px;
+        }
+    }
+
+    .ant-modal-body {
+        padding: 16px 56px 32px;
+    }
+
+    .ant-modal-footer {
+        padding: 24px 40px;
+    }
+}

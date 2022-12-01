@@ -39,8 +39,9 @@ const NavNoPatient = () => {
             <i className="icon-plus add-patient-icon"
                onClick={showAddPatientDialog}/>
 
-            You have no patient now.<br/>
-            Would you
+            You have no patient now.
+            <br/>
+            Would you&nbsp;
             <span className="add-patient-button"
                   onClick={showAddPatientDialog}>
                 Create new Patient

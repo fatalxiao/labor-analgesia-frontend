@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import {bindModelActionCreators} from 'vivy';
 
 // Components
-import Dialog from 'alcedo-ui/Dialog';
+import ModuleModal from 'components/ModuleModal';
 import TextField from 'customized/MaterialTextField';
 import DropdownSelect from 'customized/MaterialDropdownSelect';
 import FieldSet from 'components/FieldSet';
@@ -90,13 +90,13 @@ const AddPatientDialog = ({
     ]);
 
     return (
-        <Dialog className="add-patient-dialog"
-                visible={visible}
-                title="Create Patient"
-                okButtonText="Create"
-                closeIconCls="fal fa-times"
-                onOKButtonClick={save}
-                onRequestClose={onRequestClose}>
+        <ModuleModal className="add-patient-dialog"
+                     open={visible}
+                     title="Create Patient"
+                     okText="Create"
+                     width={720}
+                     onOk={save}
+                     onCancel={onRequestClose}>
 
             <FieldSet title="1. Patient Basic Information">
                 <div className="row">
@@ -127,15 +127,14 @@ const AddPatientDialog = ({
             </FieldSet>
 
             {
-                errorMsg ?
+                errorMsg && (
                     <Msg type={Msg.Type.ERROR}>
                         {errorMsg}
                     </Msg>
-                    :
-                    null
+                )
             }
 
-        </Dialog>
+        </ModuleModal>
     );
 
 };
