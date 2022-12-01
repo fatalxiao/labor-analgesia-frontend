@@ -18,21 +18,12 @@ const presets = [
     '@babel/preset-react'
 ];
 
-const commonPlugins = [
-    ['import', {
-        'libraryName': 'antd',
-        'libraryDirectory': 'es',
-        'style': true
-    }]
-];
-
 module.exports = {
     'env': {
 
         'development': {
             presets,
             plugins: [
-                ...commonPlugins,
                 'transform-import-sync'
             ]
         },
@@ -47,7 +38,6 @@ module.exports = {
         'production': {
             presets,
             plugins: [
-                ...commonPlugins,
                 ['transform-react-remove-prop-types', {removeImport: true}]
             ]
         }
