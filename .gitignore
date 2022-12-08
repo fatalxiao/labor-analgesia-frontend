@@ -12,7 +12,6 @@ Thumbs.db
 # Dependency directories
 node_modules
 .sass-cache
-package-lock.json
 
 # Dist directories
 /dpe-frontend
