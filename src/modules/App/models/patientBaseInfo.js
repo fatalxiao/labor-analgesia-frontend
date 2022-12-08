@@ -5,9 +5,6 @@
 // Apis
 import {createPatient} from 'modules/App/apis/PatientApi';
 
-// Vendors
-import cloneDeep from 'lodash/cloneDeep';
-
 /**
  * 默认的表单数据
  * @type {{}}
@@ -21,7 +18,7 @@ const DEFAULT_FORM = {
 export default {
     nameSpace: 'patientBaseInfo',
     state: {
-        form: {...DEFAULT_FORM}
+        formValue: {...DEFAULT_FORM}
     },
     apis: {
 
@@ -32,7 +29,7 @@ export default {
          */
         createPatient: ({callback}) => (dispatchApi, dispatch, getState) => {
 
-            const data = getState().patientBaseInfo.form;
+            const data = getState().patientBaseInfo.formValue;
 
             if (!data.id || !data.name || !data.group) {
                 return;
@@ -66,28 +63,21 @@ export default {
         resetPatientBaseInfo: state => {
             return {
                 ...state,
-                form: {...DEFAULT_FORM}
+                formValue: {...DEFAULT_FORM}
             };
         },
 
         /**
-         * 更新 Patient 基础信息中某个字段的值
+         * 更新 Patient 基础信息
          * @param state
-         * @param fieldName
-         * @param fieldValue
-         * @returns {*&{form}}
+         * @param formValue
+         * @returns {*&{formValue}}
          */
-        updatePatientBaseInfoField: (state, {fieldName, fieldValue}) => {
-
-            const form = cloneDeep(state.form);
-
-            form[fieldName] = fieldValue;
-
+        updatePatientBaseInfo: (state, {formValue}) => {
             return {
                 ...state,
-                form
+                formValue
             };
-
         }
 
     }

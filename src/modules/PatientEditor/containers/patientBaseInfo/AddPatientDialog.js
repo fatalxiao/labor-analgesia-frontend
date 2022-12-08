@@ -102,7 +102,6 @@ AddPatientDialog.propTypes = {
     visible: PropTypes.bool,
 
     pushRoute: PropTypes.func,
-    updatePatientBaseInfoField: PropTypes.func,
     createPatient: PropTypes.func,
     onRequestClose: PropTypes.func
 
@@ -113,6 +112,5 @@ export default connect(state => ({
     form: state.patientBaseInfo.form
 }), dispatch => bindModelActionCreators({
     pushRoute: 'route/push',
-    updatePatientBaseInfoField: 'patientBaseInfo/updatePatientBaseInfoField',
     createPatient: 'patientBaseInfo/createPatient'
 }, dispatch))(AddPatientDialog);
