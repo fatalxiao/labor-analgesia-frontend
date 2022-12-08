@@ -29,7 +29,12 @@ ModuleSelect.propTypes = {
 };
 
 ModuleSelect.defaultProps = {
-    size: 'large'
+    size: 'large',
+    fieldNames: {
+        label: 'name',
+        value: 'id',
+        options: 'options'
+    }
 };
 
 export default ModuleSelect;

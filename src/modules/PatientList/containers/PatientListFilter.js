@@ -8,16 +8,16 @@ import {connect} from 'react-redux';
 import {bindModelActionCreators} from 'vivy';
 
 // Components
-import RaisedButton from 'alcedo-ui/RaisedButton';
-import DropdownSelect from 'customized/MaterialDropdownSelect';
+import {PlusOutlined} from '@ant-design/icons';
 import AddPatientDialog from 'modules/PatientEditor/containers/patientBaseInfo/AddPatientDialog';
-import ModuleSearch from 'components/ModuleSearch';
+import ModuleButton from 'components/ModuleButton';
+import PatientListFilterForm from './PatientListFilterForm';
 
 // Styles
 import './PatientListFilter.scss';
 
 const PatientListFilter = ({
-    filterValue, groupList, filterGroup, statusList, filterStatus,
+    filterValue, groupList, statusList,
     resetPatientBaseInfo, onFilterChange
 }) => {
 
@@ -25,39 +25,6 @@ const PatientListFilter = ({
      * add patient dialog 是否显示的标志
      */
     const [addPatientDialogVisible, setAddPatientDialogVisible] = useState(false);
-
-    /**
-     * 处理 patient filter 的变更
-     * @type {Function}
-     */
-    const handlePatientFilterChange = useCallback(value => {
-        onFilterChange?.(value, filterGroup, filterStatus);
-    }, [
-        filterGroup, filterStatus,
-        onFilterChange
-    ]);
-
-    /**
-     * 处理 group filter 的变更
-     * @type {Function}
-     */
-    const handleGroupFilterChange = useCallback(value => {
-        onFilterChange?.(filterValue, value, filterStatus);
-    }, [
-        filterValue, filterStatus,
-        onFilterChange
-    ]);
-
-    /**
-     * 处理 status filter 的变更
-     * @type {Function}
-     */
-    const handleStatusFilterChange = useCallback(value => {
-        onFilterChange?.(filterValue, filterGroup, value);
-    }, [
-        filterValue, filterGroup,
-        onFilterChange
-    ]);
 
     /**
      * 显示 add patient dialog
@@ -81,36 +48,21 @@ const PatientListFilter = ({
     return (
         <div className="patient-list-filter">
 
-            <RaisedButton className="create-patient-button"
-                          theme={RaisedButton.Theme.HIGHLIGHT}
-                          iconCls="icon-plus"
-                          value="Create Patient"
-                          onClick={showAddPatientDialog}/>
+            <ModuleButton className="create-patient-button"
+                          type="primary"
+                          icon={<PlusOutlined/>}
+                          size="large"
+                          onClick={showAddPatientDialog}>
+                Create Patient
+            </ModuleButton>
 
             <AddPatientDialog visible={addPatientDialogVisible}
                               onRequestClose={hideAddPatientDialog}/>
 
-            <div className="patient-filter-wrapper">
-
-                <DropdownSelect className="group-select"
-                                data={groupList}
-                                valueField="id"
-                                displayField="name"
-                                value={filterGroup}
-                                onChange={handleGroupFilterChange}/>
-
-                <DropdownSelect className="status-select"
-                                data={statusList}
-                                valueField="id"
-                                displayField="name"
-                                value={filterStatus}
-                                onChange={handleStatusFilterChange}/>
-
-                <ModuleSearch value={filterValue}
-                              placeholder="Search"
-                              onChange={handlePatientFilterChange}/>
-
-            </div>
+            <PatientListFilterForm filterValue={filterValue}
+                                   groupList={groupList}
+                                   statusList={statusList}
+                                   onFilterChange={onFilterChange}/>
 
         </div>
     );
@@ -119,17 +71,19 @@ const PatientListFilter = ({
 
 PatientListFilter.propTypes = {
 
-    filterValue: PropTypes.string,
+    filterValue: PropTypes.shape({
+        group: PropTypes.number,
+        status: PropTypes.number,
+        search: PropTypes.string
+    }),
     groupList: PropTypes.array,
-    filterGroup: PropTypes.object,
     statusList: PropTypes.array,
-    filterStatus: PropTypes.object,
 
     resetPatientBaseInfo: PropTypes.func,
     onFilterChange: PropTypes.func
 
 };
 
-export default connect(null, dispatch => bindModelActionCreators({
+export default connect(undefined, dispatch => bindModelActionCreators({
     resetPatientBaseInfo: 'patientBaseInfo/resetPatientBaseInfo'
 }, dispatch))(PatientListFilter);

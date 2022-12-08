@@ -2,7 +2,7 @@
  * @file PatientList.js
  */
 
-import React, {useState, useMemo, useCallback} from 'react';
+import React, {useState, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -21,42 +21,35 @@ const PatientList = ({
     /**
      * id / name 文本 filter 的值
      */
-    const [filterValue, setFilterValue] = useState('');
-
-    /**
-     * group filter 的值
-     */
-    const [filterGroup, setFilterGroup] = useState(PatientList.ALL_GROUP);
-
-    /**
-     * status filter 的值
-     */
-    const [filterStatus, setFilterStatus] = useState(PatientList.ALL_STATUS);
+    const [filterValue, setFilterValue] = useState({
+        group: PatientList.ALL_GROUP.id,
+        status: PatientList.ALL_STATUS.id,
+        search: ''
+    });
 
     /**
      * 最终 table 的值
      */
     const tableData = useMemo(() => {
-        return patientList.filter(item =>
-            (item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
-            &&
-            (filterGroup?.id === 0 ? true : item?.groupId === filterGroup?.id)
-            &&
-            (filterStatus?.id === -1 ? true : item?.status === filterStatus?.id)
-        );
+        return patientList.filter(item => (
+            filterValue?.search ?
+                item?.id?.includes(filterValue.search) || item?.name?.includes(filterValue.search)
+                :
+                true
+        ) && (
+            filterValue?.group === 0 ?
+                true
+                :
+                item?.groupId === filterValue?.group
+        ) && (
+            filterValue?.status === -1 ?
+                true
+                :
+                item?.status === filterValue?.status
+        ));
     }, [
-        patientList, filterValue, filterGroup, filterStatus
+        patientList, filterValue
     ]);
-
-    /**
-     * 处理 filter 变更
-     * @type {Function}
-     */
-    const handleFilterChange = useCallback((filterValue, filterGroup, filterStatus) => {
-        setFilterValue(filterValue);
-        setFilterGroup(filterGroup);
-        setFilterStatus(filterStatus);
-    }, []);
 
     return (
         <div className="patient-list">
@@ -66,10 +59,8 @@ const PatientList = ({
 
                         <PatientListFilter filterValue={filterValue}
                                            groupList={[PatientList.ALL_GROUP, ...groupList]}
-                                           filterGroup={filterGroup}
                                            statusList={PatientList.STATUS_LIST}
-                                           filterStatus={filterStatus}
-                                           onFilterChange={handleFilterChange}/>
+                                           onFilterChange={setFilterValue}/>
 
                         <PatientListTable data={tableData}/>
 

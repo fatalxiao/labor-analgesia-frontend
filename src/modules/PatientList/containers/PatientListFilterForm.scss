@@ -1,0 +1,15 @@
+/**
+ * @file PatientListFilterForm.scss
+ */
+
+@import 'scss/common.scss';
+
+.patient-filter-form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    & > * {
+        margin: 0 0 0 16px;
+    }
+}

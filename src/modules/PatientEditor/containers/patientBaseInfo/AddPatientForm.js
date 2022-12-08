@@ -82,12 +82,7 @@ const AddPatientForm = ({
                                    required: true,
                                    message: 'Please select group!'
                                }]}>
-                        <ModuleSelect options={groupList}
-                                      fieldNames={{
-                                          label: 'name',
-                                          value: 'id',
-                                          options: 'options'
-                                      }}/>
+                        <ModuleSelect options={groupList}/>
                     </Form.Item>
                 </Col>
             </ModuleRow>
