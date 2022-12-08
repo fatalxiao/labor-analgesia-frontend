@@ -2,8 +2,6 @@
  * @file AddPatientDialog.scss
  */
 
-@import 'scss/common.scss';
-
 .add-patient-dialog {
 
     .ant-modal-body {
@@ -16,6 +14,13 @@
         .material-text-field,
         .material-dropdown-select {
             margin-bottom: 24px;
+        }
+    }
+
+    .ant-modal-footer {
+
+        .ant-btn-primary {
+            background: #87d068;
         }
     }
 }
