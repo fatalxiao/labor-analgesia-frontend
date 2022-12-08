@@ -11,6 +11,9 @@ import {Input} from 'antd';
 // Vendors
 import classNames from 'classnames';
 
+// Styles
+import './style.scss';
+
 const ModuleInput = ({
     className,
     ...restProps

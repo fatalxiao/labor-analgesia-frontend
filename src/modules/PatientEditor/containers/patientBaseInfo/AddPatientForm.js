@@ -8,11 +8,12 @@ import {connect} from 'react-redux';
 import {bindModelActionCreators} from 'vivy';
 
 // Components
-import {Form, Row, Col} from 'antd';
+import {Row, Col} from 'antd';
 import ModuleModal from 'components/ModuleModal';
 import TextField from 'customized/MaterialTextField';
 import DropdownSelect from 'customized/MaterialDropdownSelect';
 import FieldSet from 'components/FieldSet';
+import ModuleForm from 'components/ModuleForm';
 import FieldSetTitle from 'components/FieldSetTitle';
 import ModuleInput from 'components/ModuleInput';
 import Msg from 'components/Msg';
@@ -28,7 +29,7 @@ const AddPatientDialog = ({
     updatePatientBaseInfoField
 }) => {
 
-    const [form] = Form.useForm();
+    const [form] = ModuleForm.useForm();
 
     /**
      * 更新值
@@ -44,9 +45,9 @@ const AddPatientDialog = ({
     ]);
 
     return (
-        <Form form={form}
-              layout="vertical"
-              initialValues={formValue}>
+        <ModuleForm form={form}
+                    layout="vertical"
+                    initialValues={formValue}>
 
             <FieldSetTitle>
                 1. Patient Basic Information
@@ -57,18 +58,18 @@ const AddPatientDialog = ({
                 md: 24
             }}>
                 <Col span={12}>
-                    <Form.Item label="ID"
-                               name="id"
-                               required>
+                    <ModuleForm.Item label="ID"
+                                     name="id"
+                                     required>
                         <ModuleInput/>
-                    </Form.Item>
+                    </ModuleForm.Item>
                 </Col>
                 <Col span={12}>
-                    <Form.Item label="Name"
-                               name="name"
-                               required>
+                    <ModuleForm.Item label="Name"
+                                     name="name"
+                                     required>
                         <ModuleInput/>
-                    </Form.Item>
+                    </ModuleForm.Item>
                 </Col>
             </Row>
 
@@ -77,10 +78,10 @@ const AddPatientDialog = ({
             </FieldSetTitle>
             <Row>
                 <Col span={24}>
-                    <Form.Item label="Group"
-                               name="group">
+                    <ModuleForm.Item label="Group"
+                                     name="group">
 
-                    </Form.Item>
+                    </ModuleForm.Item>
                 </Col>
             </Row>
 
@@ -113,7 +114,7 @@ const AddPatientDialog = ({
             {/*     </div> */}
             {/* </FieldSet> */}
 
-        </Form>
+        </ModuleForm>
     );
 
 };
