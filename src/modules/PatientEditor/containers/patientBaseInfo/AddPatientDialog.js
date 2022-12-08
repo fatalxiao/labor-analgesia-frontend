@@ -2,69 +2,38 @@
  * @file AddPatientDialog.js
  */
 
-import React, {useState, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindModelActionCreators} from 'vivy';
 
 // Components
 import ModuleModal from 'components/ModuleModal';
-import TextField from 'customized/MaterialTextField';
-import DropdownSelect from 'customized/MaterialDropdownSelect';
-import FieldSet from 'components/FieldSet';
-import Msg from 'components/Msg';
 import AddPatientForm from './AddPatientForm';
-
-// Vendors
-import {formatString} from 'vendors/Util';
-
-// Styles
-import './AddPatientDialog.scss';
+import {Form} from 'antd';
 
 const AddPatientDialog = ({
-    form, visible,
+    visible,
     pushRoute, createPatient, onRequestClose
 }) => {
 
-    /**
-     * 当前 form 的错误消息
-     */
-    const [errorMsg, setErrorMsg] = useState('');
+    const [form] = Form.useForm();
 
     /**
      * 提交新值到后端
      * @type {Function}
      */
     const save = useCallback(() => {
-
-        const error = [];
-
-        // 校验值
-        if (!form.id) {
-            error.push('ID');
-        }
-        if (!form.name) {
-            error.push('Name');
-        }
-        if (!form.group) {
-            error.push('Group');
-        }
-
-        // 如果有 error 中断提交
-        if (error.length > 0) {
-            setErrorMsg(`${error.join(', ')} is required!`);
-            return;
-        }
-
-        createPatient?.({
-            callback: () => {
-                onRequestClose();
-                pushRoute?.({
-                    route: `/app/patient/info/${form.id}`
-                });
-            }
+        form.validateFields().then(() => {
+            createPatient?.({
+                callback: responseData => {
+                    onRequestClose();
+                    pushRoute?.({
+                        route: `/app/patient/info/${responseData.id}`
+                    });
+                }
+            });
         });
-
     }, [
         form,
         createPatient, onRequestClose, pushRoute
@@ -78,17 +47,7 @@ const AddPatientDialog = ({
                      width={720}
                      onOk={save}
                      onCancel={onRequestClose}>
-
-            <AddPatientForm/>
-
-            {/* { */}
-            {/*     errorMsg && ( */}
-            {/*         <Msg type={Msg.Type.ERROR}> */}
-            {/*             {errorMsg} */}
-            {/*         </Msg> */}
-            {/*     ) */}
-            {/* } */}
-
+            <AddPatientForm form={form}/>
         </ModuleModal>
     );
 
@@ -97,7 +56,6 @@ const AddPatientDialog = ({
 AddPatientDialog.propTypes = {
 
     groupList: PropTypes.array,
-    form: PropTypes.object,
 
     visible: PropTypes.bool,
 
@@ -108,8 +66,7 @@ AddPatientDialog.propTypes = {
 };
 
 export default connect(state => ({
-    groupList: state.patientGroup.list,
-    form: state.patientBaseInfo.form
+    groupList: state.patientGroup.list
 }), dispatch => bindModelActionCreators({
     pushRoute: 'route/push',
     createPatient: 'patientBaseInfo/createPatient'

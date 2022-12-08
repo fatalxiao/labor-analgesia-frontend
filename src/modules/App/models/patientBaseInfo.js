@@ -40,13 +40,13 @@ export default {
                 params: {
                     id: data.id,
                     name: data.name,
-                    groupId: data.group.id
+                    groupId: data.group
                 },
-                successCallback() {
+                successCallback(responseData) {
                     dispatch({
                         type: 'patients/getPatients'
                     });
-                    callback?.();
+                    callback?.(responseData);
                 }
             });
 

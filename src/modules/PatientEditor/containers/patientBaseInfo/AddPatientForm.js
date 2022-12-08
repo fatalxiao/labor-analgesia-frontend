@@ -8,21 +8,17 @@ import {connect} from 'react-redux';
 import {bindModelActionCreators} from 'vivy';
 
 // Components
-import {Form, Row, Col} from 'antd';
+import {Form, Col} from 'antd';
 import ModuleForm from 'components/ModuleForm';
 import FieldSetTitle from 'components/FieldSetTitle';
+import ModuleRow from 'components/ModuleRow';
 import ModuleInput from 'components/ModuleInput';
 import ModuleSelect from 'components/ModuleSelect';
 
 const AddPatientForm = ({
-    groupList, formValue,
+    form, groupList, formValue,
     updatePatientBaseInfo
 }) => {
-
-    /**
-     * form
-     */
-    const [form] = Form.useForm();
 
     /**
      * 更新值
@@ -45,7 +41,7 @@ const AddPatientForm = ({
             <FieldSetTitle>
                 1. Patient Basic Information
             </FieldSetTitle>
-            <Row gutter={{
+            <ModuleRow gutter={{
                 xs: 8,
                 sm: 16,
                 md: 24
@@ -53,26 +49,39 @@ const AddPatientForm = ({
                 <Col span={12}>
                     <Form.Item label="ID"
                                name="id"
-                               required>
+                               required
+                               rules={[{
+                                   required: true,
+                                   message: 'Please input ID!'
+                               }]}>
                         <ModuleInput/>
                     </Form.Item>
                 </Col>
                 <Col span={12}>
                     <Form.Item label="Name"
                                name="name"
-                               required>
+                               required
+                               rules={[{
+                                   required: true,
+                                   message: 'Please input name!'
+                               }]}>
                         <ModuleInput/>
                     </Form.Item>
                 </Col>
-            </Row>
+            </ModuleRow>
 
             <FieldSetTitle>
                 2. Select Patient Group
             </FieldSetTitle>
-            <Row>
+            <ModuleRow>
                 <Col span={24}>
                     <Form.Item label="Group"
-                               name="group">
+                               name="group"
+                               required
+                               rules={[{
+                                   required: true,
+                                   message: 'Please select group!'
+                               }]}>
                         <ModuleSelect options={groupList}
                                       fieldNames={{
                                           label: 'name',
@@ -81,7 +90,7 @@ const AddPatientForm = ({
                                       }}/>
                     </Form.Item>
                 </Col>
-            </Row>
+            </ModuleRow>
 
         </ModuleForm>
     );
@@ -89,6 +98,8 @@ const AddPatientForm = ({
 };
 
 AddPatientForm.propTypes = {
+
+    form: PropTypes.object,
 
     groupList: PropTypes.array,
     formValue: PropTypes.object,
