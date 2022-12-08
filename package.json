@@ -28,6 +28,7 @@
         "url": "https://github.com/fatalxiao/labor-analgesia-frontend/issues"
     },
     "dependencies": {
+        "@ant-design/icons": "^4.8.0",
         "alcedo-ui": "^2.71.1",
         "antd": "^5.0.4",
         "axios": "^1.2.1",

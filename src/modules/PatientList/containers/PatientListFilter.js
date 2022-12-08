@@ -8,10 +8,10 @@ import {connect} from 'react-redux';
 import {bindModelActionCreators} from 'vivy';
 
 // Components
-import TextField from 'customized/MaterialTextField';
 import RaisedButton from 'alcedo-ui/RaisedButton';
 import DropdownSelect from 'customized/MaterialDropdownSelect';
 import AddPatientDialog from 'modules/PatientEditor/containers/patientBaseInfo/AddPatientDialog';
+import ModuleSearch from 'components/ModuleSearch';
 
 // Styles
 import './PatientListFilter.scss';
@@ -106,11 +106,9 @@ const PatientListFilter = ({
                                 value={filterStatus}
                                 onChange={handleStatusFilterChange}/>
 
-                <TextField className="patient-filter"
-                           value={filterValue}
-                           placeholder="Search"
-                           rightIconCls="icon-magnifying-glass"
-                           onChange={handlePatientFilterChange}/>
+                <ModuleSearch value={filterValue}
+                              placeholder="Search"
+                              onChange={handlePatientFilterChange}/>
 
             </div>
 

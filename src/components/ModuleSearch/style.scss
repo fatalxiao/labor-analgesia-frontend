@@ -1,0 +1,19 @@
+/**
+ * @file ModuleSearch.scss
+ */
+
+.module-search {
+
+    .ant-input-suffix {
+        color: #d9d9d9;
+        transition: all .2s;
+    }
+
+    &:hover,
+    &.ant-input-affix-wrapper-focused {
+
+        .ant-input-suffix {
+            color: #4096ff;
+        }
+    }
+}
