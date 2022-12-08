@@ -24,13 +24,12 @@ const ModuleForm = ({
           })}/>
 );
 
-ModuleForm.useForm = Form.useForm;
-ModuleForm.Item = Form.Item;
-
 ModuleForm.propTypes = {
     className: PropTypes.string
 };
 
-ModuleForm.defaultProps = {};
+ModuleForm.defaultProps = {
+    layout: 'vertical'
+};
 
 export default ModuleForm;

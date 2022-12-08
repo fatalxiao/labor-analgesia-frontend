@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import {bindModelActionCreators} from 'vivy';
 
 // Components
-import {Row, Col} from 'antd';
+import {Form, Row, Col} from 'antd';
 import ModuleModal from 'components/ModuleModal';
 import TextField from 'customized/MaterialTextField';
 import DropdownSelect from 'customized/MaterialDropdownSelect';
@@ -29,7 +29,7 @@ const AddPatientDialog = ({
     updatePatientBaseInfoField
 }) => {
 
-    const [form] = ModuleForm.useForm();
+    const [form] = Form.useForm();
 
     /**
      * 更新值
@@ -58,18 +58,18 @@ const AddPatientDialog = ({
                 md: 24
             }}>
                 <Col span={12}>
-                    <ModuleForm.Item label="ID"
-                                     name="id"
-                                     required>
+                    <Form.Item label="ID"
+                               name="id"
+                               required>
                         <ModuleInput/>
-                    </ModuleForm.Item>
+                    </Form.Item>
                 </Col>
                 <Col span={12}>
-                    <ModuleForm.Item label="Name"
-                                     name="name"
-                                     required>
+                    <Form.Item label="Name"
+                               name="name"
+                               required>
                         <ModuleInput/>
-                    </ModuleForm.Item>
+                    </Form.Item>
                 </Col>
             </Row>
 
@@ -78,13 +78,12 @@ const AddPatientDialog = ({
             </FieldSetTitle>
             <Row>
                 <Col span={24}>
-                    <ModuleForm.Item label="Group"
-                                     name="group">
+                    <Form.Item label="Group"
+                               name="group">
 
-                    </ModuleForm.Item>
+                    </Form.Item>
                 </Col>
             </Row>
-
 
             {/* <FieldSet title="1. Patient Basic Information"> */}
             {/*     <div className="row"> */}
