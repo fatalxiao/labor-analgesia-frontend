@@ -13,6 +13,7 @@ import TextField from 'customized/MaterialTextField';
 import DropdownSelect from 'customized/MaterialDropdownSelect';
 import FieldSet from 'components/FieldSet';
 import Msg from 'components/Msg';
+import AddPatientForm from './AddPatientForm';
 
 // Vendors
 import {formatString} from 'vendors/Util';
@@ -21,34 +22,14 @@ import {formatString} from 'vendors/Util';
 import './AddPatientDialog.scss';
 
 const AddPatientDialog = ({
-    groupList, form, visible,
-    pushRoute, updatePatientBaseInfoField, createPatient, onRequestClose
+    form, visible,
+    pushRoute, createPatient, onRequestClose
 }) => {
 
     /**
      * 当前 form 的错误消息
      */
     const [errorMsg, setErrorMsg] = useState('');
-
-    /**
-     * 更新值
-     * @type {Function}
-     */
-    const updateField = useCallback((fieldName, fieldValue) => {
-
-        if (errorMsg) {
-            setErrorMsg('');
-        }
-
-        updatePatientBaseInfoField?.({
-            fieldName,
-            fieldValue
-        });
-
-    }, [
-        errorMsg,
-        updatePatientBaseInfoField
-    ]);
 
     /**
      * 提交新值到后端
@@ -98,41 +79,15 @@ const AddPatientDialog = ({
                      onOk={save}
                      onCancel={onRequestClose}>
 
-            <FieldSet title="1. Patient Basic Information">
-                <div className="row">
-                    <TextField className="col-6"
-                               label="ID"
-                               value={formatString(form.id)}
-                               required={true}
-                               onChange={value => updateField('id', value)}/>
-                    <TextField className="col-6"
-                               label="Name"
-                               value={formatString(form.name)}
-                               required={true}
-                               onChange={value => updateField('name', value)}/>
-                </div>
-            </FieldSet>
+            <AddPatientForm/>
 
-            <FieldSet title="2. Select Patient Group">
-                <div className="row">
-                    <DropdownSelect className="col-12"
-                                    label="Group"
-                                    data={groupList}
-                                    valueField="id"
-                                    displayField="name"
-                                    value={form.group}
-                                    required={true}
-                                    onChange={value => updateField('group', value)}/>
-                </div>
-            </FieldSet>
-
-            {
-                errorMsg && (
-                    <Msg type={Msg.Type.ERROR}>
-                        {errorMsg}
-                    </Msg>
-                )
-            }
+            {/* { */}
+            {/*     errorMsg && ( */}
+            {/*         <Msg type={Msg.Type.ERROR}> */}
+            {/*             {errorMsg} */}
+            {/*         </Msg> */}
+            {/*     ) */}
+            {/* } */}
 
         </ModuleModal>
     );
