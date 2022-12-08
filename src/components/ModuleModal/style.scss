@@ -13,9 +13,12 @@
     }
 
     .ant-modal-close {
+        top: 32px;
+        right: 32px;
         width: 40px;
         height: 40px;
         border-radius: 50%;
+        background: #edf0f3;
 
         .ant-modal-close-x {
             font-size: 24px;
@@ -27,6 +30,10 @@
         padding: 24px 32px 0 40px;
 
         .ant-modal-title {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 56px;
             font-size: 24px;
         }
     }
@@ -36,6 +43,14 @@
     }
 
     .ant-modal-footer {
-        padding: 24px 40px;
+        padding: 24px 40px 32px;
+
+        .ant-btn {
+            height: 48px;
+            padding: 0 32px;
+            border-radius: 8px;
+            margin-left: 24px !important;
+            font-size: 16px;
+        }
     }
 }
