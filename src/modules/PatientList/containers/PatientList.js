@@ -3,8 +3,7 @@
  */
 
 import React, {useState, useMemo, useCallback} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
+import {useModelState} from 'react-vivy';
 
 // Components
 import PatientListFilter from './PatientListFilter';
@@ -14,9 +13,10 @@ import NavNoPatient from 'modules/App/containers/nav/patients/NavNoPatient';
 // Styles
 import './PatientList.scss';
 
-const PatientList = ({
-    groupList, patientList
-}) => {
+const PatientList = () => {
+
+    const {list: groupList} = useModelState('patientGroup');
+    const {list: patientList} = useModelState('patients');
 
     /**
      * id / name 文本 filter 的值
@@ -100,12 +100,4 @@ PatientList.STATUS_LIST = [PatientList.ALL_STATUS, {
     name: 'Disabled'
 }];
 
-PatientList.propTypes = {
-    groupList: PropTypes.array,
-    patientList: PropTypes.array
-};
-
-export default connect(state => ({
-    groupList: state.patientGroup.list,
-    patientList: state.patients.list
-}))(PatientList);
+export default PatientList;
