@@ -4,8 +4,7 @@
 
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelState, useModelActions} from 'react-vivy';
 
 // Components
 import {Redirect} from 'react-router-dom';
@@ -19,9 +18,12 @@ import {renderRoutes} from 'react-router-config';
 import './PatientEditor.scss';
 
 const PatientEditor = ({
-    route, form, steps, activatedStep,
-    pushRoute
+    route
 }) => {
+
+    const {form} = useModelState('patientInfo');
+    const {steps, activatedStep} = useModelState('editPatient');
+    const {push: pushRoute} = useModelActions('route');
 
     /**
      * 处理 step 变更
@@ -48,7 +50,7 @@ const PatientEditor = ({
             <ModuleCard className="patient-editor-content">
 
                 {
-                    form?.name ?
+                    form?.name && (
                         <div>
                             <div className="patient-editor-base-info">
                                 <h1 className="patient-editor-name">{form.name}</h1>
@@ -57,26 +59,23 @@ const PatientEditor = ({
                                 </div>
                             </div>
                             {
-                                activatedStep >= 0 ?
+                                activatedStep >= 0 && (
                                     <h2 className="patient-editor-content-title">
                                         {`Step ${activatedStep + 1}. ${steps?.[activatedStep].title}`}
                                     </h2>
-                                    :
-                                    null
+                                )
                             }
                         </div>
-                        :
-                        null
+                    )
                 }
 
                 {renderRoutes(route?.routes)}
 
                 {
-                    location?.pathname === '/app/patient' ?
+                    location?.pathname === '/app/patient' && (
                         <Redirect from="/app/patient"
                                   to="/app/patient-list"/>
-                        :
-                        null
+                    )
                 }
 
             </ModuleCard>
@@ -87,22 +86,7 @@ const PatientEditor = ({
 };
 
 PatientEditor.propTypes = {
-
-    route: PropTypes.object,
-
-    form: PropTypes.object,
-    steps: PropTypes.array,
-
-    activatedStep: PropTypes.number,
-
-    pushRoute: PropTypes.func
-
+    route: PropTypes.object
 };
 
-export default connect(state => ({
-    form: state.patientInfo.form,
-    steps: state.editPatient.steps,
-    activatedStep: state.editPatient.activatedStep
-}), dispatch => bindModelActionCreators({
-    pushRoute: 'route/push'
-}, dispatch))(PatientEditor);
+export default PatientEditor;
