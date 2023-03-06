@@ -4,24 +4,25 @@
 
 import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelActions} from 'react-vivy';
+import {useIsApiSuccess} from 'vivy-api';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
 import PatientForm from './PatientForm';
 import StepAction from 'components/StepAction';
 
-// Statics
-import {ApiStatus} from 'vivy-api';
-
 // Styles
 import './PatientInfo.scss';
 
 const PatientInfo = ({
-    match, getPatientInfoStatus,
-    pushRoute, getPatientInfo, updatePatientInfo, updatePatientStep
+    match
 }) => {
+
+    const isGetPatientInfoStatusSuccess = useIsApiSuccess('patientInfo/getPatientInfo');
+    const {push: pushRoute} = useModelActions('route');
+    const {getPatientInfo, updatePatientInfo} = useModelActions('patientInfo');
+    const {updatePatientStep} = useModelActions('editPatient');
 
     /**
      * 从路由 params 中取出 patientId
@@ -30,16 +31,6 @@ const PatientInfo = ({
         return match.params.id;
     }, [
         match.params.id
-    ]);
-
-    /**
-     * 是否正在加载数据
-     * @type {boolean}
-     */
-    const loading = useMemo(() => {
-        return getPatientInfoStatus !== ApiStatus.SUCCESS;
-    }, [
-        getPatientInfoStatus
     ]);
 
     /**
@@ -98,7 +89,7 @@ const PatientInfo = ({
 
     return (
         <div className="patient-info">
-            <ModuleLoading loading={loading}>
+            <ModuleLoading loading={!isGetPatientInfoStatusSuccess}>
 
                 <PatientForm patientId={patientId}/>
 
@@ -112,22 +103,7 @@ const PatientInfo = ({
 };
 
 PatientInfo.propTypes = {
-
-    match: PropTypes.object,
-    getPatientInfoStatus: PropTypes.string,
-
-    pushRoute: PropTypes.func,
-    getPatientInfo: PropTypes.func,
-    updatePatientInfo: PropTypes.func,
-    updatePatientStep: PropTypes.func
-
+    match: PropTypes.object
 };
 
-export default connect(state => ({
-    getPatientInfoStatus: state.apiStatus.patientInfo?.getPatientInfo
-}), dispatch => bindModelActionCreators({
-    pushRoute: 'route/push',
-    getPatientInfo: 'patientInfo/getPatientInfo',
-    updatePatientInfo: 'patientInfo/updatePatientInfo',
-    updatePatientStep: 'editPatient/updatePatientStep'
-}, dispatch))(PatientInfo);
+export default PatientInfo;
