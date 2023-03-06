@@ -3,9 +3,7 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelActions} from 'react-vivy';
 
 // Components
 import AnchorButton from 'alcedo-ui/AnchorButton';
@@ -13,20 +11,18 @@ import AnchorButton from 'alcedo-ui/AnchorButton';
 // Styles
 import './AnalgesiaAppendTimePointButton.scss';
 
-const AnalgesiaAppendTimePointButton = ({
-    appendTimePoint
-}) => (
-    <AnchorButton className="analgesia-append-time-point-button"
-                  value="Append Time Point"
-                  onClick={appendTimePoint}>
-        <i className="fal fa-chevron-down down-icon"/>
-    </AnchorButton>
-);
+const AnalgesiaAppendTimePointButton = () => {
 
-AnalgesiaAppendTimePointButton.propTypes = {
-    appendTimePoint: PropTypes.func
+    const {appendTimePoint} = useModelActions('analgesia');
+
+    return (
+        <AnchorButton className="analgesia-append-time-point-button"
+                      value="Append Time Point"
+                      onClick={appendTimePoint}>
+            <i className="fal fa-chevron-down down-icon"/>
+        </AnchorButton>
+    );
+
 };
 
-export default connect(null, dispatch => bindModelActionCreators({
-    appendTimePoint: 'analgesia/appendTimePoint'
-}, dispatch))(AnalgesiaAppendTimePointButton);
+export default AnalgesiaAppendTimePointButton;
