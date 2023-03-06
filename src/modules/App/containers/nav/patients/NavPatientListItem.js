@@ -4,8 +4,7 @@
 
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelState, useModelActions} from 'react-vivy';
 
 // Components
 import FlatButton from 'alcedo-ui/FlatButton';
@@ -14,9 +13,11 @@ import FlatButton from 'alcedo-ui/FlatButton';
 import './NavPatientListItem.scss';
 
 const NavPatientListItem = ({
-    groupList, patient,
-    pushRoute
+    patient
 }) => {
+
+    const {list: groupList} = useModelState('patientGroup');
+    const {push: pushRoute} = useModelActions('route');
 
     /**
      * 当前 patient 的 ID
@@ -45,7 +46,7 @@ const NavPatientListItem = ({
         pushRoute
     ]);
 
-    return patient ?
+    return patient && (
         <FlatButton className="nav-patient-list-item"
                     onClick={handleClick}>
 
@@ -60,22 +61,12 @@ const NavPatientListItem = ({
             </div>
 
         </FlatButton>
-        :
-        null;
+    );
 
 };
 
 NavPatientListItem.propTypes = {
-
-    groupList: PropTypes.array,
-    patient: PropTypes.object,
-
-    pushRoute: PropTypes.func
-
+    patient: PropTypes.object
 };
 
-export default connect(state => ({
-    groupList: state.patientGroup.list
-}), dispatch => bindModelActionCreators({
-    pushRoute: 'route/push'
-}, dispatch))(NavPatientListItem);
+export default NavPatientListItem;
