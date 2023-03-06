@@ -31,7 +31,7 @@ module.exports = {
         'polyfill': ['@babel/polyfill'],
         'moment': ['moment'],
         'react': [
-            'react', 'react-dom', 'vivy', 'vivy-api', 'vivy-async-component', 'react-redux',
+            'react', 'react-dom', 'vivy', 'vivy-api', 'vivy-async-component', 'react-vivy',
             'react-router', 'react-router-config', 'react-router-dom', 'connected-react-router'
         ],
         'tools': ['classnames', 'history']

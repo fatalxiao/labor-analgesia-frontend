@@ -5,7 +5,7 @@
 import React, {Children, useRef, useState, useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
-import {connect} from 'react-redux';
+import {connect} from 'react-vivy';
 
 // Components
 import Card from 'components/module/ModuleCard';

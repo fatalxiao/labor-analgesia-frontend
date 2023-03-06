@@ -4,7 +4,7 @@
 
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {connect} from 'react-vivy';
 
 // Components
 import CircularLoading from 'alcedo-ui/CircularLoading';

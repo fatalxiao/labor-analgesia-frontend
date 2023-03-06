@@ -4,7 +4,7 @@
 
 import React, {Component, isValidElement, cloneElement, createRef} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {connect} from 'react-vivy';
 
 // Components
 import Table from 'alcedo-ui/Table';
