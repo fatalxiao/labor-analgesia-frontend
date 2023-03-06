@@ -3,8 +3,7 @@
  */
 
 import React, {useMemo} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
+import {useSelector} from 'react-vivy';
 
 // Components
 import {NavLink} from 'react-router-dom';
@@ -16,7 +15,9 @@ import {getPath} from 'src/config.sitemap';
 // Styles
 import './NavTitle.scss';
 
-const NavTitle = ({state}) => {
+const NavTitle = () => {
+
+    const state = useSelector(state => state);
 
     /**
      * 获取当前 location 的 pathname
@@ -37,7 +38,7 @@ const NavTitle = ({state}) => {
     return (
         <div className="nav-title">
             {
-                navPath?.length > 0 ?
+                navPath?.length > 0 && (
                     <div className="nav-title-crumbs-wrapper">
 
                         <i className="icon-location-pin nav-title-crumbs-icon"/>
@@ -57,18 +58,11 @@ const NavTitle = ({state}) => {
                                 }/>
 
                     </div>
-                    :
-                    null
+                )
             }
         </div>
     );
 
 };
 
-NavTitle.propTypes = {
-    state: PropTypes.object
-};
-
-export default connect(state => ({
-    state
-}))(NavTitle);
+export default NavTitle;
