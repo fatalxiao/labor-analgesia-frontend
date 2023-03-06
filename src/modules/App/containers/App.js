@@ -4,17 +4,15 @@
 
 import React, {useMemo, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelActions} from 'react-vivy';
+import {useIsApiSuccess} from 'vivy-api';
+import {useAsyncComponentLoading} from 'vivy-async-component';
 
 // Components
 import Nav from './nav/Nav';
 import NavTitle from './nav/title/NavTitle';
 import PageLoading from 'alcedo-ui/PageLoading';
 import ModuleLoading from 'components/module/loading/ModuleLoading';
-
-// Statics
-import {ApiStatus} from 'vivy-api';
 
 // Vendors
 import {renderRoutes} from 'react-router-config';
@@ -23,30 +21,37 @@ import {renderRoutes} from 'react-router-config';
 import './App.scss';
 
 const App = ({
-
-    route,
-
-    asyncComponentLoading,
-
-    getPatientGroupsStatus, getSensoryBlocksStatus,
-    getObservalEndPointsStatus, getEpPlacementPointsStatus,
-
-    getPatientGroups, getSensoryBlocks, getObservalEndPoints, getEpPlacementPoints, getPatients
-
+    route
 }) => {
+
+    // 获取当前是否加载异步 components 的状态
+    const asyncComponentLoading = useAsyncComponentLoading();
+
+    // 获取 Api 是否 Success
+    const isGetPatientGroupsSuccess = useIsApiSuccess('patientGroup/getPatientGroups');
+    const isGetSensoryBlocksSuccess = useIsApiSuccess('sensoryBlock/getSensoryBlocks');
+    const isGetObservalEndPointsSuccess = useIsApiSuccess('observalEndPoint/getObservalEndPoints');
+    const isGetEpPlacementPointsStatusSuccess = useIsApiSuccess('epPlacementPoint/getEpPlacementPoints');
+
+    // 获取 actions
+    const {getPatientGroups} = useModelActions('patientGroup');
+    const {getSensoryBlocks} = useModelActions('sensoryBlock');
+    const {getObservalEndPoints} = useModelActions('observalEndPoint');
+    const {getEpPlacementPoints} = useModelActions('epPlacementPoint');
+    const {getPatients} = useModelActions('patients');
 
     /**
      * 是否正在加载基础数据
      * @type {*}
      */
     const loading = useMemo(() => {
-        return getPatientGroupsStatus !== ApiStatus.SUCCESS
-            || getSensoryBlocksStatus !== ApiStatus.SUCCESS
-            || getObservalEndPointsStatus !== ApiStatus.SUCCESS
-            || getEpPlacementPointsStatus !== ApiStatus.SUCCESS;
+        return !isGetPatientGroupsSuccess
+            || !isGetSensoryBlocksSuccess
+            || !isGetObservalEndPointsSuccess
+            || !isGetEpPlacementPointsStatusSuccess;
     }, [
-        getPatientGroupsStatus, getSensoryBlocksStatus,
-        getObservalEndPointsStatus, getEpPlacementPointsStatus
+        isGetPatientGroupsSuccess, isGetSensoryBlocksSuccess,
+        isGetObservalEndPointsSuccess, isGetEpPlacementPointsStatusSuccess
     ]);
 
     /**
@@ -89,37 +94,7 @@ const App = ({
 };
 
 App.propTypes = {
-
-    route: PropTypes.object,
-
-    asyncComponentLoading: PropTypes.bool,
-
-    getPatientGroupsStatus: PropTypes.string,
-    getSensoryBlocksStatus: PropTypes.string,
-    getObservalEndPointsStatus: PropTypes.string,
-    getEpPlacementPointsStatus: PropTypes.string,
-
-    getPatientGroups: PropTypes.func,
-    getSensoryBlocks: PropTypes.func,
-    getObservalEndPoints: PropTypes.func,
-    getEpPlacementPoints: PropTypes.func,
-    getPatients: PropTypes.func
-
+    route: PropTypes.object
 };
 
-export default connect(state => ({
-
-    asyncComponentLoading: state.asyncComponentLoading,
-
-    getPatientGroupsStatus: state.apiStatus.patientGroup?.getPatientGroups,
-    getSensoryBlocksStatus: state.apiStatus.sensoryBlock?.getSensoryBlocks,
-    getObservalEndPointsStatus: state.apiStatus.observalEndPoint?.getObservalEndPoints,
-    getEpPlacementPointsStatus: state.apiStatus.epPlacementPoint?.getEpPlacementPoints
-
-}), dispatch => bindModelActionCreators({
-    getPatientGroups: 'patientGroup/getPatientGroups',
-    getSensoryBlocks: 'sensoryBlock/getSensoryBlocks',
-    getObservalEndPoints: 'observalEndPoint/getObservalEndPoints',
-    getEpPlacementPoints: 'epPlacementPoint/getEpPlacementPoints',
-    getPatients: 'patients/getPatients'
-}, dispatch))(App);
+export default App;
