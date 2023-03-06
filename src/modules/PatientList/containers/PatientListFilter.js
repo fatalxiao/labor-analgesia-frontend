@@ -4,8 +4,7 @@
 
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelActions} from 'react-vivy';
 
 // Components
 import TextField from 'customized/MaterialTextField';
@@ -18,8 +17,10 @@ import './PatientListFilter.scss';
 
 const PatientListFilter = ({
     filterValue, groupList, filterGroup, statusList, filterStatus,
-    resetPatientBaseInfo, onFilterChange
+    onFilterChange
 }) => {
+
+    const {resetPatientBaseInfo} = useModelActions('patientBaseInfo');
 
     /**
      * add patient dialog 是否显示的标志
@@ -127,11 +128,8 @@ PatientListFilter.propTypes = {
     statusList: PropTypes.array,
     filterStatus: PropTypes.object,
 
-    resetPatientBaseInfo: PropTypes.func,
     onFilterChange: PropTypes.func
 
 };
 
-export default connect(null, dispatch => bindModelActionCreators({
-    resetPatientBaseInfo: 'patientBaseInfo/resetPatientBaseInfo'
-}, dispatch))(PatientListFilter);
+export default PatientListFilter;
