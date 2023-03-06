@@ -133,8 +133,8 @@ const Nav = () => {
 
         setNoMove(false);
 
-        const offsetX = e.pageX - mouseX,
-            nextNavWidth = Valid.range(startWidth + offsetX, Nav.NAV_BAR_WIDTH);
+        const offsetX = e.pageX - mouseX;
+        const nextNavWidth = Valid.range(startWidth + offsetX, Nav.NAV_BAR_WIDTH);
 
         setDragging(true);
         setNavWidth(nextNavWidth);
@@ -153,11 +153,11 @@ const Nav = () => {
 
         setResizing(false);
 
-        const isFold = isNavPatientFold(navWidth),
-            nextNavWidth = isFold ?
-                Nav.NAV_BAR_WIDTH
-                :
-                (navWidth < Nav.DEFAULT_WIDTH ? Nav.DEFAULT_WIDTH : navWidth);
+        const isFold = isNavPatientFold(navWidth);
+        const nextNavWidth = isFold ?
+            Nav.NAV_BAR_WIDTH
+            :
+            (navWidth < Nav.DEFAULT_WIDTH ? Nav.DEFAULT_WIDTH : navWidth);
 
         setDragging(false);
         setNavWidth(nextNavWidth);
