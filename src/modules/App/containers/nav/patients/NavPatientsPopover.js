@@ -3,9 +3,7 @@
  */
 
 import React, {useCallback} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelActions} from 'react-vivy';
 
 // Components
 import IconButton from 'alcedo-ui/IconButton';
@@ -16,9 +14,9 @@ import PatientList from './NavPatientList';
 // Styles
 import './NavPatientsPopover.scss';
 
-const NavPatientsPopover = ({
-    pushRoute
-}) => {
+const NavPatientsPopover = () => {
+
+    const {push: pushRoute} = useModelActions('route');
 
     /**
      * 跳转到列表页
@@ -49,10 +47,4 @@ const NavPatientsPopover = ({
 
 };
 
-NavPatientsPopover.propTypes = {
-    pushRoute: PropTypes.func
-};
-
-export default connect(null, dispatch => bindModelActionCreators({
-    pushRoute: 'route/push'
-}, dispatch))(NavPatientsPopover);
+export default NavPatientsPopover;
