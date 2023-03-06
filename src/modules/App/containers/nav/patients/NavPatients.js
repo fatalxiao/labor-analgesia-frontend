@@ -4,16 +4,14 @@
 
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
+import {useModelState} from 'react-vivy';
+import {useIsApiRequest} from 'vivy-api';
 
 // Components
 import CircularLoading from 'alcedo-ui/CircularLoading';
 import NavPatientCollapsed from './NavPatientsPopover';
 import NoPatient from './NavNoPatient';
 import PatientListWrapper from './NavPatientListWrapper';
-
-// Statics
-import {ApiStatus} from 'vivy-api';
 
 // Vendors
 import classNames from 'classnames';
@@ -22,8 +20,12 @@ import classNames from 'classnames';
 import './NavPatients.scss';
 
 const NavPatient = ({
-    isCollapsed, isFold, getGroupListStatus, patientList, getPatientListStatus
+    isCollapsed, isFold
 }) => {
+
+    const {list: patientList} = useModelState('patients');
+    const isGetPatientGroupsRequest = useIsApiRequest('patientGroup/getPatientGroups');
+    const isGetPatientsRequest = useIsApiRequest('patients/getPatients');
 
     /**
      * 是否没有 patient
@@ -42,8 +44,7 @@ const NavPatient = ({
             fold: isFold
         })}>
             {
-                getGroupListStatus === ApiStatus.REQUEST
-                || getPatientListStatus === ApiStatus.REQUEST ?
+                isGetPatientGroupsRequest || isGetPatientsRequest ?
                     <CircularLoading/>
                     :
                     isCollapsed ?
@@ -61,14 +62,7 @@ const NavPatient = ({
 
 NavPatient.propTypes = {
     isCollapsed: PropTypes.bool,
-    isFold: PropTypes.bool,
-    getGroupListStatus: PropTypes.string,
-    patientList: PropTypes.array,
-    getPatientListStatus: PropTypes.string
+    isFold: PropTypes.bool
 };
 
-export default connect(state => ({
-    getGroupListStatus: state.apiStatus.patientGroup?.getPatientGroups,
-    patientList: state.patients.list,
-    getPatientListStatus: state.apiStatus.patients?.getPatients
-}))(NavPatient);
+export default NavPatient;
