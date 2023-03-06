@@ -4,8 +4,7 @@
 
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModel, useModelState} from 'react-vivy';
 
 // Components
 import ModuleTableCard from 'components/module/table/ModuleTableCard';
@@ -22,9 +21,11 @@ import {formatString} from 'vendors/Util';
 import './AnalgesiaTable.scss';
 
 const AnalgesiaTable = ({
-    patientId, thoracicList, sacralList, analgesiaData,
-    createOrUpdateAnalgesiaData, updateAnalgesiaDataField
+    patientId
 }) => {
+
+    const {thoracicList, sacralList} = useModelState('sensoryBlock');
+    const [{data: analgesiaData}, {createOrUpdateAnalgesiaData, updateAnalgesiaDataField}] = useModel('analgesia');
 
     /**
      * 将 Analgesia 数据提交到后端
@@ -90,13 +91,13 @@ const AnalgesiaTable = ({
             headRenderer: 'TSB',
             bodyRenderer: rowData =>
                 <div>
-                    <label>L: </label>
+                    <label>L:</label>
                     <DropdownSelect data={thoracicList}
                                     value={rowData.thoracicSensoryBlockLeft}
                                     valueField="value"
                                     displayField="name"
                                     onChange={v => updateField(rowData.timePoint, 'thoracicSensoryBlockLeft', v)}/>
-                    <label>, R: </label>
+                    <label>, R:</label>
                     <DropdownSelect data={thoracicList}
                                     value={rowData.thoracicSensoryBlockRight}
                                     valueField="value"
@@ -110,13 +111,13 @@ const AnalgesiaTable = ({
             headRenderer: 'SSB',
             bodyRenderer: rowData =>
                 <div>
-                    <label>L: </label>
+                    <label>L:</label>
                     <DropdownSelect data={sacralList}
                                     value={rowData.sacralSensoryBlockLeft}
                                     valueField="value"
                                     displayField="name"
                                     onChange={v => updateField(rowData.timePoint, 'sacralSensoryBlockLeft', v)}/>
-                    <label>, R: </label>
+                    <label>, R:</label>
                     <DropdownSelect data={sacralList}
                                     value={rowData.sacralSensoryBlockRight}
                                     valueField="value"
@@ -178,22 +179,7 @@ const AnalgesiaTable = ({
 };
 
 AnalgesiaTable.propTypes = {
-
-    patientId: PropTypes.string,
-    thoracicList: PropTypes.array,
-    sacralList: PropTypes.array,
-    analgesiaData: PropTypes.array,
-
-    createOrUpdateAnalgesiaData: PropTypes.func,
-    updateAnalgesiaDataField: PropTypes.func
-
+    patientId: PropTypes.string
 };
 
-export default connect(state => ({
-    thoracicList: state.sensoryBlock.thoracicList,
-    sacralList: state.sensoryBlock.sacralList,
-    analgesiaData: state.analgesia.data
-}), dispatch => bindModelActionCreators({
-    createOrUpdateAnalgesiaData: 'analgesia/createOrUpdateAnalgesiaData',
-    updateAnalgesiaDataField: 'analgesia/updateAnalgesiaDataField'
-}, dispatch))(AnalgesiaTable);
+export default AnalgesiaTable;
