@@ -3,7 +3,7 @@
  */
 
 import React, {useMemo} from 'react';
-import {useSelector} from 'react-vivy';
+import {useStoreState} from 'react-vivy';
 
 // Components
 import {NavLink} from 'react-router-dom';
@@ -17,7 +17,7 @@ import './NavTitle.scss';
 
 const NavTitle = () => {
 
-    const state = useSelector(state => state);
+    const state = useStoreState();
 
     /**
      * 获取当前 location 的 pathname
