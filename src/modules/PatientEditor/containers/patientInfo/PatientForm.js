@@ -4,8 +4,7 @@
 
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModel} from 'react-vivy';
 
 // Components
 import Checkbox from 'customized/MaterialCheckbox';
@@ -21,9 +20,10 @@ import {formatString} from 'vendors/Util';
 import './PatientForm.scss';
 
 const PatientForm = ({
-    form, patientId,
-    updatePatientInfo, updatePatientInfoField
+    patientId
 }) => {
+
+    const [{form}, {updatePatientInfo, updatePatientInfoField}] = useModel('patientInfo');
 
     /**
      * 提交 field 新值到后端
@@ -153,18 +153,7 @@ const PatientForm = ({
 };
 
 PatientForm.propTypes = {
-
-    patientId: PropTypes.string,
-    form: PropTypes.object,
-
-    updatePatientInfo: PropTypes.func,
-    updatePatientInfoField: PropTypes.func
-
+    patientId: PropTypes.string
 };
 
-export default connect(state => ({
-    form: state.patientInfo.form
-}), dispatch => bindModelActionCreators({
-    updatePatientInfo: 'patientInfo/updatePatientInfo',
-    updatePatientInfoField: 'patientInfo/updatePatientInfoField'
-}, dispatch))(PatientForm);
+export default PatientForm;
