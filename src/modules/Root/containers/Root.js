@@ -4,8 +4,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModel} from 'react-vivy';
 
 // Components
 import {Redirect} from 'react-router-dom';
@@ -22,49 +21,40 @@ import {renderRoutes} from 'react-router-config';
 import './Root.scss';
 
 const Root = ({
-    toasts, notifications, route, location,
-    clearToasts, clearNotifications
-}) => (
-    <div className="root">
+    route, location
+}) => {
 
-        <Toaster toasts={toasts}
-                 position={Toaster.Position.TOP}
-                 onToastPop={clearToasts}/>
+    const [toasts, {clearToasts}] = useModel('toasts');
+    const [notifications, {clearNotifications}] = useModel('notifications');
 
-        <Notifier notifications={notifications}
-                  position={Notifier.Position.TOP_RIGHT}
-                  onNotificationPop={clearNotifications}
-                  duration={8000}/>
+    return (
+        <div className="root">
 
-        {renderRoutes(route.routes)}
+            <Toaster toasts={toasts}
+                     position={Toaster.Position.TOP}
+                     onToastPop={clearToasts}/>
 
-        {
-            location.pathname === '/' ?
-                <Redirect from="/" to={DEFAULT_ROUTE}/>
-                :
-                null
-        }
+            <Notifier notifications={notifications}
+                      position={Notifier.Position.TOP_RIGHT}
+                      onNotificationPop={clearNotifications}
+                      duration={8000}/>
 
-    </div>
-);
+            {renderRoutes(route.routes)}
 
-Root.propTypes = {
+            {
+                location.pathname === '/' && (
+                    <Redirect from="/" to={DEFAULT_ROUTE}/>
+                )
+            }
 
-    route: PropTypes.object,
-    location: PropTypes.object,
-
-    toasts: PropTypes.array,
-    notifications: PropTypes.array,
-
-    clearToasts: PropTypes.func,
-    clearNotifications: PropTypes.func
+        </div>
+    );
 
 };
 
-export default connect(state => ({
-    toasts: state.toasts,
-    notifications: state.notifications
-}), dispatch => bindModelActionCreators({
-    clearToasts: 'toasts/clearToasts',
-    clearNotifications: 'notifications/clearNotifications'
-}, dispatch))(Root);
+Root.propTypes = {
+    route: PropTypes.object,
+    location: PropTypes.object
+};
+
+export default Root;
