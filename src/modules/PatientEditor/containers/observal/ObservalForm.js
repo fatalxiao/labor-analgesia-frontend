@@ -4,8 +4,7 @@
 
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModel, useModelState} from 'react-vivy';
 
 // Components
 import Checkbox from 'customized/MaterialCheckbox';
@@ -23,9 +22,12 @@ import {formatString} from 'vendors/Util';
 import './ObservalForm.scss';
 
 const ObservalForm = ({
-    patientId, form, observalEndPoints, epPlacementPoints,
-    createOrUpdateObservalData, updateObservalField
+    patientId
 }) => {
+
+    const [{form}, {createOrUpdateObservalData, updateObservalField}] = useModel('observal');
+    const {list: observalEndPoints} = useModelState('observalEndPoint');
+    const {list: epPlacementPoints} = useModelState('epPlacementPoint');
 
     /**
      * 提交到后端
@@ -235,22 +237,7 @@ ObservalForm.GENDER_LIST = [{
 }];
 
 ObservalForm.propTypes = {
-
-    patientId: PropTypes.string,
-    form: PropTypes.object,
-    observalEndPoints: PropTypes.array,
-    epPlacementPoints: PropTypes.array,
-
-    createOrUpdateObservalData: PropTypes.func,
-    updateObservalField: PropTypes.func
-
+    patientId: PropTypes.string
 };
 
-export default connect(state => ({
-    form: state.observal.form,
-    observalEndPoints: state.observalEndPoint.list,
-    epPlacementPoints: state.epPlacementPoint.list
-}), dispatch => bindModelActionCreators({
-    createOrUpdateObservalData: 'observal/createOrUpdateObservalData',
-    updateObservalField: 'observal/updateObservalField'
-}, dispatch))(ObservalForm);
+export default ObservalForm;
