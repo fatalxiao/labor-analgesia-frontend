@@ -2,38 +2,30 @@
  * @file ObservalData.js
  */
 
-import React, {useMemo, useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelActions} from 'react-vivy';
+import {useIsApiSuccess} from 'vivy-api';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
 import StepAction from 'components/StepAction';
 import ObservalForm from './ObservalForm';
 
-// Statics
-import {ApiStatus} from 'vivy-api';
-
 const ObservalData = ({
-    match, getObservalDataStatus,
-    pushRoute, getPatientInfo, getObservalData, createOrUpdateObservalData, updatePatientStep
+    match
 }) => {
+
+    const isGetObservalDataStatusSuccess = useIsApiSuccess('observal/getObservalData');
+    const {push: pushRoute} = useModelActions('route');
+    const {getPatientInfo} = useModelActions('patientInfo');
+    const {getObservalData, createOrUpdateObservalData} = useModelActions('observal');
+    const {updatePatientStep} = useModelActions('editPatient');
 
     /**
      * 从路由 params 获取 patient ID
      */
     const patientId = match?.params?.patientId;
-
-    /**
-     * 是否正在加载数据
-     * @type {boolean}
-     */
-    const loading = useMemo(() => {
-        return getObservalDataStatus !== ApiStatus.SUCCESS;
-    }, [
-        getObservalDataStatus
-    ]);
 
     /**
      * 加载数据
@@ -110,7 +102,7 @@ const ObservalData = ({
 
     return (
         <div className="observal-data">
-            <ModuleLoading loading={loading}>
+            <ModuleLoading loading={!isGetObservalDataStatusSuccess}>
 
                 <ObservalForm patientId={patientId}/>
 
@@ -125,24 +117,7 @@ const ObservalData = ({
 };
 
 ObservalData.propTypes = {
-
-    match: PropTypes.object,
-    getObservalDataStatus: PropTypes.string,
-
-    pushRoute: PropTypes.func,
-    getPatientInfo: PropTypes.func,
-    getObservalData: PropTypes.func,
-    createOrUpdateObservalData: PropTypes.func,
-    updatePatientStep: PropTypes.func
-
+    match: PropTypes.object
 };
 
-export default connect(state => ({
-    getObservalDataStatus: state.apiStatus.observal?.getObservalData
-}), dispatch => bindModelActionCreators({
-    pushRoute: 'route/push',
-    getPatientInfo: 'patientInfo/getPatientInfo',
-    getObservalData: 'observal/getObservalData',
-    createOrUpdateObservalData: 'observal/createOrUpdateObservalData',
-    updatePatientStep: 'editPatient/updatePatientStep'
-}, dispatch))(ObservalData);
+export default ObservalData;
