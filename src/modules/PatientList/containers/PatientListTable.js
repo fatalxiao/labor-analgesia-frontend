@@ -4,8 +4,7 @@
 
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelState, useModelActions} from 'react-vivy';
 
 // Components
 import {NavLink} from 'react-router-dom';
@@ -22,9 +21,13 @@ import debounce from 'lodash/debounce';
 import './PatientListTable.scss';
 
 const PatientListTable = ({
-    groupList, data,
-    updatePatientName, updatePatientGroup, enablePatient, disablePatient
+    data
 }) => {
+
+    const {list: groupList} = useModelState('patientGroup');
+    const {
+        updatePatientName, updatePatientGroup, enablePatient, disablePatient
+    } = useModelActions('patients');
 
     /**
      * 处理 patient name 的变更
@@ -150,22 +153,7 @@ const PatientListTable = ({
 };
 
 PatientListTable.propTypes = {
-
-    groupList: PropTypes.array,
-    data: PropTypes.array,
-
-    updatePatientName: PropTypes.func,
-    updatePatientGroup: PropTypes.func,
-    enablePatient: PropTypes.func,
-    disablePatient: PropTypes.func
-
+    data: PropTypes.array
 };
 
-export default connect(state => ({
-    groupList: state.patientGroup.list
-}), dispatch => bindModelActionCreators({
-    updatePatientName: 'patients/updatePatientName',
-    updatePatientGroup: 'patients/updatePatientGroup',
-    enablePatient: 'patients/enablePatient',
-    disablePatient: 'patients/disablePatient'
-}, dispatch))(PatientListTable);
+export default PatientListTable;
