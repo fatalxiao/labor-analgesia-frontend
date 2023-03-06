@@ -4,8 +4,7 @@
 
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModel, useModelState, useModelActions} from 'react-vivy';
 
 // Components
 import Dialog from 'alcedo-ui/Dialog';
@@ -21,9 +20,13 @@ import {formatString} from 'vendors/Util';
 import './AddPatientDialog.scss';
 
 const AddPatientDialog = ({
-    groupList, form, visible,
-    pushRoute, updatePatientBaseInfoField, createPatient, onRequestClose
+    visible,
+    onRequestClose
 }) => {
+
+    const {list: groupList} = useModelState('patientGroup');
+    const [{form}, {updatePatientBaseInfoField, createPatient}] = useModel('patientBaseInfo');
+    const {push: pushRoute} = useModelActions('route');
 
     /**
      * 当前 form 的错误消息
@@ -127,12 +130,11 @@ const AddPatientDialog = ({
             </FieldSet>
 
             {
-                errorMsg ?
+                errorMsg && (
                     <Msg type={Msg.Type.ERROR}>
                         {errorMsg}
                     </Msg>
-                    :
-                    null
+                )
             }
 
         </Dialog>
@@ -141,24 +143,8 @@ const AddPatientDialog = ({
 };
 
 AddPatientDialog.propTypes = {
-
-    groupList: PropTypes.array,
-    form: PropTypes.object,
-
     visible: PropTypes.bool,
-
-    pushRoute: PropTypes.func,
-    updatePatientBaseInfoField: PropTypes.func,
-    createPatient: PropTypes.func,
     onRequestClose: PropTypes.func
-
 };
 
-export default connect(state => ({
-    groupList: state.patientGroup.list,
-    form: state.patientBaseInfo.form
-}), dispatch => bindModelActionCreators({
-    pushRoute: 'route/push',
-    updatePatientBaseInfoField: 'patientBaseInfo/updatePatientBaseInfoField',
-    createPatient: 'patientBaseInfo/createPatient'
-}, dispatch))(AddPatientDialog);
+export default AddPatientDialog;
