@@ -4,7 +4,7 @@
 
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
+import {useModelState} from 'react-vivy';
 
 // Components
 import NavPatientListItem from './NavPatientListItem';
@@ -16,16 +16,18 @@ import Event from 'vendors/Event';
 import './NavPatientList.scss';
 
 const NavPatientList = ({
-    patientList, data
+    data
 }) => {
+
+    const {list} = useModelState('patients');
 
     /**
      * 列表的数据
      */
     const listData = useMemo(() => {
-        return data || patientList;
+        return data || list;
     }, [
-        data, patientList
+        data, list
     ]);
 
     return (
@@ -43,10 +45,7 @@ const NavPatientList = ({
 };
 
 NavPatientList.propTypes = {
-    patientList: PropTypes.array,
     data: PropTypes.array
 };
 
-export default connect(state => ({
-    patientList: state.patients.list
-}))(NavPatientList);
+export default NavPatientList;
