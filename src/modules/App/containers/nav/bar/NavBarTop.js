@@ -4,8 +4,7 @@
 
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelActions} from 'react-vivy';
 
 // Components
 import IconButton from 'alcedo-ui/IconButton';
@@ -23,9 +22,11 @@ import classNames from 'classnames';
 import './NavBarTop.scss';
 
 const NavBarTop = ({
-    children, isFold,
-    pushRoute, resetPatientBaseInfo
+    children, isFold
 }) => {
+
+    const {push: pushRoute} = useModelActions('route');
+    const {resetPatientBaseInfo} = useModelActions('patientBaseInfo');
 
     /**
      * 是否显示查询抽屉
@@ -134,16 +135,8 @@ const NavBarTop = ({
 };
 
 NavBarTop.propTypes = {
-
     children: PropTypes.any,
-    isFold: PropTypes.bool,
-
-    pushRoute: PropTypes.func,
-    resetPatientBaseInfo: PropTypes.func
-
+    isFold: PropTypes.bool
 };
 
-export default connect(null, dispatch => bindModelActionCreators({
-    pushRoute: 'route/push',
-    resetPatientBaseInfo: 'patientBaseInfo/resetPatientBaseInfo'
-}, dispatch))(NavBarTop);
+export default NavBarTop;

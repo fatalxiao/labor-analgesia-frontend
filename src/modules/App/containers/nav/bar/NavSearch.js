@@ -4,7 +4,7 @@
 
 import React, {useState, useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
+import {useModelState} from 'react-vivy';
 
 // Components
 import Paper from 'alcedo-ui/Paper';
@@ -18,9 +18,11 @@ import classNames from 'classnames';
 import './NavSearch.scss';
 
 const NavSearch = ({
-    visible, patientList,
+    visible,
     onRequestClose
 }) => {
+
+    const {list: patientList} = useModelState('patients');
 
     /**
      * 过滤的值
@@ -81,14 +83,8 @@ const NavSearch = ({
 };
 
 NavSearch.propTypes = {
-
-    patientList: PropTypes.array,
     visible: PropTypes.bool,
-
     onRequestClose: PropTypes.func
-
 };
 
-export default connect(state => ({
-    patientList: state.patients.list
-}))(NavSearch);
+export default NavSearch;
