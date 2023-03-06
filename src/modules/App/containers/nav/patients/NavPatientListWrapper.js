@@ -3,9 +3,7 @@
  */
 
 import React, {useCallback} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelState, useModelActions} from 'react-vivy';
 
 // Components
 import FlatButton from 'alcedo-ui/FlatButton';
@@ -14,10 +12,10 @@ import PatientList from './NavPatientList';
 // Styles
 import './NavPatientListWrapper.scss';
 
-const NavPatientListWrapper = ({
-    patientList,
-    pushRoute
-}) => {
+const NavPatientListWrapper = () => {
+
+    const {list: patientList} = useModelState('patients');
+    const {push: pushRoute} = useModelActions('route');
 
     /**
      * 跳转到列表页
@@ -50,13 +48,4 @@ const NavPatientListWrapper = ({
 
 };
 
-NavPatientListWrapper.propTypes = {
-    patientList: PropTypes.array,
-    pushRoute: PropTypes.func
-};
-
-export default connect(state => ({
-    patientList: state.patients.list
-}), dispatch => bindModelActionCreators({
-    pushRoute: 'route/push'
-}, dispatch))(NavPatientListWrapper);
+export default NavPatientListWrapper;
