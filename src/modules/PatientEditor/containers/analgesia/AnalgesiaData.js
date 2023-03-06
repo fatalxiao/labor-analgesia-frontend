@@ -2,41 +2,33 @@
  * @file AnalgesiaData.js
  */
 
-import React, {useMemo, useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModelActions} from 'react-vivy';
+import {useIsApiSuccess} from 'vivy-api';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
 import StepAction from 'components/StepAction';
 import AnalgesiaTable from './AnalgesiaTable';
 
-// Statics
-import {ApiStatus} from 'vivy-api';
-
 // Styles
 import './AnalgesiaData.scss';
 
 const AnalgesiaData = ({
-    match, getAnalgesiaStatus,
-    pushRoute, getPatientInfo, getAnalgesia, createOrUpdateAnalgesiaData, updatePatientStep
+    match
 }) => {
+
+    const isGetAnalgesiaStatusSuccess = useIsApiSuccess('analgesia/getAnalgesia');
+    const {push: pushRoute} = useModelActions('route');
+    const {getPatientInfo} = useModelActions('patientInfo');
+    const {getAnalgesia, createOrUpdateAnalgesiaData} = useModelActions('analgesia');
+    const {updatePatientStep} = useModelActions('editPatient');
 
     /**
      * 从路由 params 中取出的 patient ID
      */
     const patientId = match.params?.patientId;
-
-    /**
-     * 是否正在加载数据
-     * @type {boolean}
-     */
-    const loading = useMemo(() => {
-        return getAnalgesiaStatus !== ApiStatus.SUCCESS;
-    }, [
-        getAnalgesiaStatus
-    ]);
 
     /**
      * 加载数据
@@ -113,7 +105,7 @@ const AnalgesiaData = ({
 
     return (
         <div className="analgesia-data">
-            <ModuleLoading loading={loading}>
+            <ModuleLoading loading={!isGetAnalgesiaStatusSuccess}>
 
                 <AnalgesiaTable patientId={patientId}/>
 
@@ -127,24 +119,7 @@ const AnalgesiaData = ({
 };
 
 AnalgesiaData.propTypes = {
-
-    match: PropTypes.object,
-    getAnalgesiaStatus: PropTypes.string,
-
-    pushRoute: PropTypes.func,
-    getPatientInfo: PropTypes.func,
-    getAnalgesia: PropTypes.func,
-    createOrUpdateAnalgesiaData: PropTypes.func,
-    updatePatientStep: PropTypes.func
-
+    match: PropTypes.object
 };
 
-export default connect(state => ({
-    getAnalgesiaStatus: state.apiStatus.analgesia?.getAnalgesia
-}), dispatch => bindModelActionCreators({
-    pushRoute: 'route/push',
-    getPatientInfo: 'patientInfo/getPatientInfo',
-    getAnalgesia: 'analgesia/getAnalgesia',
-    createOrUpdateAnalgesiaData: 'analgesia/createOrUpdateAnalgesiaData',
-    updatePatientStep: 'editPatient/updatePatientStep'
-}, dispatch))(AnalgesiaData);
+export default AnalgesiaData;
