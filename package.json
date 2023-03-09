@@ -44,12 +44,12 @@
         "react-router-config": "^5.1.1",
         "react-router-dom": "^5.3.0",
         "react-transition-group": "^4.4.5",
-        "react-vivy": "^2.0.0-alpha.3",
+        "react-vivy": "^2.0.0",
         "screenfull": "^6.0.2",
-        "vivy": "^3.0.0-alpha.10",
-        "vivy-api": "^3.0.0-alpha.4",
-        "vivy-async-component": "^3.0.0-alpha.3",
-        "vivy-router": "^3.0.0-alpha.2"
+        "vivy": "^3.0.0",
+        "vivy-api": "^3.0.0",
+        "vivy-async-component": "^3.0.0",
+        "vivy-router": "^3.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.21.0",

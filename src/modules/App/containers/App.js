@@ -33,18 +33,23 @@ const App = ({
     const {getEpPlacementPoints} = useModelActions('epPlacementPoint');
     const {getPatients} = useModelActions('patients');
 
+    const isGetPatientGroupsRequest = getPatientGroups.isRequest();
+    const isGetSensoryBlocksRequest = getSensoryBlocks.isRequest();
+    const isGetObservalEndPointsRequest = getObservalEndPoints.isRequest();
+    const isGetEpPlacementPointsRequest = getEpPlacementPoints.isRequest();
+
     /**
      * 是否正在加载基础数据
      * @type {*}
      */
     const loading = useMemo(() => {
-        return getPatientGroups.isRequest()
-            || getSensoryBlocks.isRequest()
-            || getObservalEndPoints.isRequest()
-            || getEpPlacementPoints.isRequest();
+        return isGetPatientGroupsRequest
+            || isGetSensoryBlocksRequest
+            || isGetObservalEndPointsRequest
+            || isGetEpPlacementPointsRequest;
     }, [
-        getPatientGroups, getSensoryBlocks,
-        getObservalEndPoints, getEpPlacementPoints
+        isGetPatientGroupsRequest, isGetSensoryBlocksRequest,
+        isGetObservalEndPointsRequest, isGetEpPlacementPointsRequest
     ]);
 
     /**

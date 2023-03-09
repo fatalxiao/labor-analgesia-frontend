@@ -24,6 +24,8 @@ const NavPatient = ({
 
     const [{list: patientList}, {getPatients}] = useModel('patients');
     const [, {getPatientGroups}] = useModel('patientGroup');
+    const isGetPatientGroupsRequest = getPatientGroups.isRequest();
+    const isGetPatientsRequest = getPatients.isRequest();
 
     /**
      * 是否没有 patient
@@ -42,7 +44,7 @@ const NavPatient = ({
             fold: isFold
         })}>
             {
-                getPatientGroups.isRequest() || getPatients.isRequest() ?
+                isGetPatientGroupsRequest || isGetPatientsRequest ?
                     <CircularLoading/>
                     :
                     isCollapsed ?
