@@ -5,6 +5,7 @@
 import React, {useMemo, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useModelActions} from 'react-vivy';
+import {useIsRequest} from 'vivy-api';
 import {useAsyncComponentLoading} from 'vivy-async-component';
 
 // Components
@@ -33,10 +34,10 @@ const App = ({
     const {getEpPlacementPoints} = useModelActions('epPlacementPoint');
     const {getPatients} = useModelActions('patients');
 
-    const isGetPatientGroupsRequest = getPatientGroups.isRequest();
-    const isGetSensoryBlocksRequest = getSensoryBlocks.isRequest();
-    const isGetObservalEndPointsRequest = getObservalEndPoints.isRequest();
-    const isGetEpPlacementPointsRequest = getEpPlacementPoints.isRequest();
+    const isGetPatientGroupsRequest = useIsRequest(getPatientGroups);
+    const isGetSensoryBlocksRequest = useIsRequest(getSensoryBlocks);
+    const isGetObservalEndPointsRequest = useIsRequest(getObservalEndPoints);
+    const isGetEpPlacementPointsRequest = useIsRequest(getEpPlacementPoints);
 
     /**
      * 是否正在加载基础数据

@@ -5,6 +5,7 @@
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {useModel} from 'react-vivy';
+import {useIsRequest} from 'vivy-api';
 
 // Components
 import CircularLoading from 'alcedo-ui/CircularLoading';
@@ -24,8 +25,8 @@ const NavPatient = ({
 
     const [{list: patientList}, {getPatients}] = useModel('patients');
     const [, {getPatientGroups}] = useModel('patientGroup');
-    const isGetPatientGroupsRequest = getPatientGroups.isRequest();
-    const isGetPatientsRequest = getPatients.isRequest();
+    const isGetPatientGroupsRequest = useIsRequest(getPatientGroups);
+    const isGetPatientsRequest = useIsRequest(getPatients);
 
     /**
      * 是否没有 patient

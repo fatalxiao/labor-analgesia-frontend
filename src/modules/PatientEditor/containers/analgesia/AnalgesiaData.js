@@ -5,6 +5,7 @@
 import React, {useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useModelActions} from 'react-vivy';
+import {useIsRequest} from 'vivy-api';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -22,6 +23,7 @@ const AnalgesiaData = ({
     const {getPatientInfo} = useModelActions('patientInfo');
     const {getAnalgesia, createOrUpdateAnalgesiaData} = useModelActions('analgesia');
     const {updatePatientStep} = useModelActions('editPatient');
+    const loading = useIsRequest(getAnalgesia);
 
     /**
      * 从路由 params 中取出的 patient ID
@@ -103,7 +105,7 @@ const AnalgesiaData = ({
 
     return (
         <div className="analgesia-data">
-            <ModuleLoading loading={getAnalgesia.isRequest()}>
+            <ModuleLoading loading={loading}>
 
                 <AnalgesiaTable patientId={patientId}/>
 

@@ -5,6 +5,7 @@
 import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useModelActions} from 'react-vivy';
+import {useIsRequest} from 'vivy-api';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -21,6 +22,7 @@ const PatientInfo = ({
     const {push: pushRoute} = useModelActions('route');
     const {getPatientInfo, updatePatientInfo} = useModelActions('patientInfo');
     const {updatePatientStep} = useModelActions('editPatient');
+    const loading = useIsRequest(getPatientInfo);
 
     /**
      * 从路由 params 中取出 patientId
@@ -87,7 +89,7 @@ const PatientInfo = ({
 
     return (
         <div className="patient-info">
-            <ModuleLoading loading={getPatientInfo.isRequest()}>
+            <ModuleLoading loading={loading}>
 
                 <PatientForm patientId={patientId}/>
 

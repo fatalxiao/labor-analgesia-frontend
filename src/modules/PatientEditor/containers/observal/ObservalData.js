@@ -5,6 +5,7 @@
 import React, {useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useModelActions} from 'react-vivy';
+import {useIsRequest} from 'vivy-api';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -19,6 +20,7 @@ const ObservalData = ({
     const {getPatientInfo} = useModelActions('patientInfo');
     const {getObservalData, createOrUpdateObservalData} = useModelActions('observal');
     const {updatePatientStep} = useModelActions('editPatient');
+    const loading = useIsRequest(getObservalData);
 
     /**
      * 从路由 params 获取 patient ID
@@ -100,7 +102,7 @@ const ObservalData = ({
 
     return (
         <div className="observal-data">
-            <ModuleLoading loading={getObservalData.isRequest()}>
+            <ModuleLoading loading={loading}>
 
                 <ObservalForm patientId={patientId}/>
 
