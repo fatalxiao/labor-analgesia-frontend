@@ -5,7 +5,6 @@
 import React, {useMemo, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useModelActions} from 'react-vivy';
-import {useIsApiSuccess} from 'vivy-api';
 import {useAsyncComponentLoading} from 'vivy-async-component';
 
 // Components
@@ -27,12 +26,6 @@ const App = ({
     // 获取当前是否加载异步 components 的状态
     const asyncComponentLoading = useAsyncComponentLoading();
 
-    // 获取 Api 是否 Success
-    const isGetPatientGroupsSuccess = useIsApiSuccess('patientGroup/getPatientGroups');
-    const isGetSensoryBlocksSuccess = useIsApiSuccess('sensoryBlock/getSensoryBlocks');
-    const isGetObservalEndPointsSuccess = useIsApiSuccess('observalEndPoint/getObservalEndPoints');
-    const isGetEpPlacementPointsStatusSuccess = useIsApiSuccess('epPlacementPoint/getEpPlacementPoints');
-
     // 获取 actions
     const {getPatientGroups} = useModelActions('patientGroup');
     const {getSensoryBlocks} = useModelActions('sensoryBlock');
@@ -45,13 +38,13 @@ const App = ({
      * @type {*}
      */
     const loading = useMemo(() => {
-        return !isGetPatientGroupsSuccess
-            || !isGetSensoryBlocksSuccess
-            || !isGetObservalEndPointsSuccess
-            || !isGetEpPlacementPointsStatusSuccess;
+        return getPatientGroups.isRequest()
+            || getSensoryBlocks.isRequest()
+            || getObservalEndPoints.isRequest()
+            || getEpPlacementPoints.isRequest();
     }, [
-        isGetPatientGroupsSuccess, isGetSensoryBlocksSuccess,
-        isGetObservalEndPointsSuccess, isGetEpPlacementPointsStatusSuccess
+        getPatientGroups, getSensoryBlocks,
+        getObservalEndPoints, getEpPlacementPoints
     ]);
 
     /**
