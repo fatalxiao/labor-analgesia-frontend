@@ -4,8 +4,7 @@
 
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
-import {useModelState} from 'react-vivy';
-import {useIsApiRequest} from 'vivy-api';
+import {useModel} from 'react-vivy';
 
 // Components
 import CircularLoading from 'alcedo-ui/CircularLoading';
@@ -23,9 +22,8 @@ const NavPatient = ({
     isCollapsed, isFold
 }) => {
 
-    const {list: patientList} = useModelState('patients');
-    const isGetPatientGroupsRequest = useIsApiRequest('patientGroup/getPatientGroups');
-    const isGetPatientsRequest = useIsApiRequest('patients/getPatients');
+    const [{list: patientList}, {getPatients}] = useModel('patients');
+    const [, {getPatientGroups}] = useModel('patientGroup');
 
     /**
      * 是否没有 patient
@@ -44,7 +42,7 @@ const NavPatient = ({
             fold: isFold
         })}>
             {
-                isGetPatientGroupsRequest || isGetPatientsRequest ?
+                getPatientGroups.isRequest() || getPatients.isRequest() ?
                     <CircularLoading/>
                     :
                     isCollapsed ?
