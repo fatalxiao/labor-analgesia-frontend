@@ -5,7 +5,6 @@
 import React, {useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useModelActions} from 'react-vivy';
-import {useIsApiSuccess} from 'vivy-api';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -16,7 +15,6 @@ const ObservalData = ({
     match
 }) => {
 
-    const isGetObservalDataStatusSuccess = useIsApiSuccess('observal/getObservalData');
     const {push: pushRoute} = useModelActions('route');
     const {getPatientInfo} = useModelActions('patientInfo');
     const {getObservalData, createOrUpdateObservalData} = useModelActions('observal');
@@ -102,7 +100,7 @@ const ObservalData = ({
 
     return (
         <div className="observal-data">
-            <ModuleLoading loading={!isGetObservalDataStatusSuccess}>
+            <ModuleLoading loading={getObservalData.isRequest()}>
 
                 <ObservalForm patientId={patientId}/>
 

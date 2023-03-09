@@ -5,7 +5,6 @@
 import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useModelActions} from 'react-vivy';
-import {useIsApiSuccess} from 'vivy-api';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -19,7 +18,6 @@ const PatientInfo = ({
     match
 }) => {
 
-    const isGetPatientInfoStatusSuccess = useIsApiSuccess('patientInfo/getPatientInfo');
     const {push: pushRoute} = useModelActions('route');
     const {getPatientInfo, updatePatientInfo} = useModelActions('patientInfo');
     const {updatePatientStep} = useModelActions('editPatient');
@@ -89,7 +87,7 @@ const PatientInfo = ({
 
     return (
         <div className="patient-info">
-            <ModuleLoading loading={!isGetPatientInfoStatusSuccess}>
+            <ModuleLoading loading={getPatientInfo.isRequest()}>
 
                 <PatientForm patientId={patientId}/>
 
